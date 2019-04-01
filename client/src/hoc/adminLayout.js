@@ -15,18 +15,11 @@ const LayoutAdmin = props => {
 
               <Link to="/user">User Info</Link>
 
-              <Link to="/user">My Cart</Link>
+              <Link to="/user">My Favorites</Link>
+
+              <Link to="/user">Site info</Link>
+              <Link to="/admin/categories/add">Add Categories</Link>
             </div>
-            {props.user.userData.isAdmin ? (
-              <div className="links">
-                <h3>Admin</h3>
-                <Link to="/user">Site info</Link>
-                <Link to="/admin/products/manage">Manage Products</Link>
-                <Link to="/admin/products/add">Add Products</Link>
-                <Link to="/admin/brands/add">Add Brands</Link>
-                <Link to="/admin/categories/add">Add Categories</Link>
-              </div>
-            ) : null}{" "}
             }
           </div>
 

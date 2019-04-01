@@ -20,9 +20,11 @@ body {
   margin-top: 100px;
   height: 300px;
 }
-
+.page_wrapper_auth {
+  padding-top: 0px;
+}
 .page_wrapper {
-  padding-top: 45px;
+  padding-top: 115px;
 }
 .home_wrapper .logo {
   color: #fff;
@@ -113,6 +115,12 @@ tr:nth-child(even) {
 .mobile_nav {
   display: none;
 }
+.nav_block {
+  background: #fff;
+}
+.nav_block h3 {
+  padding: 15px;
+}
 /*============================
             FORM
 ==============================*/
@@ -198,7 +206,7 @@ select {
   text-transform: uppercase;
   padding: 10px;
   display: table;
-  background: blue;
+  background: rgb(25, 123, 189);
   color: #fff;
   margin-top: 10px;
 }
@@ -289,7 +297,7 @@ header .container {
 }
 
 header .container .left {
-  width: 400px;
+  width: 200px;
 }
 header .container .srch-form {
   width: 40%;
@@ -331,7 +339,6 @@ header .container .right .bottom .tablet {
 
 header .container .right .top {
   color: #111;
-  border-bottom: 1px solid #111;
 }
 header .container .right a {
   margin-left: 20px;
@@ -523,7 +530,7 @@ footer .business_nfo .nfo {
 ==============================*/
 
 .card_block_shop {
-  margin: 30px 0px;
+  margin: 0px 0px;
 }
 
 .card_block .title {
@@ -575,7 +582,6 @@ footer .business_nfo .nfo {
 
 .card_item_wrapper .tags {
   position: relative;
-  border-bottom: 1px solid #111;
 }
 .card_item_wrapper .tags .prod_info {
   min-height: 20px;
@@ -665,17 +671,22 @@ footer .business_nfo .nfo {
 ==============================*/
 
 .shop_wrapper {
+  display: flex;
 }
 
 .shop_wrapper .left {
   flex-grow: 1;
-  max-width: 520px;
+  width: 400px;
 }
 .shop_wrapper .right {
-  padding-left: 10px;
-  width: 100%;
+  flex-grow: 1;
+  margin-left: 10px;
 }
-
+.shop_wrapper .sidebar_right {
+  margin-left: 10px;
+  flex-grow: 1;
+  width: 200px;
+}
 .collapse_title span {
   text-transform: uppercase;
   font-weight: 700;
@@ -832,6 +843,7 @@ footer .business_nfo .nfo {
   width: 60%;
   padding: 30px;
   min-height: 430px;
+  max-width: 600px;
 }
 
 .register_login_container .left,
@@ -879,7 +891,23 @@ footer .business_nfo .nfo {
   padding: 10px 0px;
   width: 260px;
 }
-
+.user_nfo_panel_home {
+  background: #fff;
+  min-height: 300px;
+}
+.user_block_heading {
+  height: 100px;
+  background: blue;
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+.user_block_heading h3 {
+  color: #fff;
+  padding-top: 55px;
+}
+.user_nfo_panel_home span {
+  padding: 15px;
+}
 .user_container .user_right {
   flex-grow: 1;
   padding: 0 0 0 29px;
@@ -1027,16 +1055,20 @@ footer .business_nfo .nfo {
 /*            TABLET                         */
 /* ************************************************************/
 
-@media (min-width: 501px) And (max-width: 800px) {
+/* @media (min-width: 601px) and (max-width: 900px) {
   .container {
     width: 95%;
     margin: 0 auto;
+    background: orange;
   }
   header .logo {
     font-size: 25px;
   }
   header .container .srch-form {
     display: none;
+  }
+  header .container .right a {
+    font-size: 14px;
   }
   .side_nav {
     display: none;
@@ -1087,26 +1119,28 @@ header .desktop {
   display: block;
 }
 .shop_wrapper .left {
-  width: 100%;
-  float: none;
-  height: 80px;
+  
+  display: none;
 }
 .shop_wrapper .right {
-  width: 100%;
-  clear: left;
-} */
+ 
+}
+.shop_wrapper .sidebar_right {
+  display: none;
+}
 
 .user_container .user_left_nav {
   width: 20%;
 }
 .user_container .user_right {
   flex-grow: 1;
-  width: 80%;
 }
+*/
+
 /* ************************************************************/
 /*            MOBILE                         */
 /* ************************************************************/
-@media (min-width: 551px) and (max-width: 800px) {
+@media (min-width: 551px) and (max-width: 850px) {
   .srch {
     display: block;
     padding: 0;
@@ -1122,8 +1156,12 @@ header .desktop {
   .srch button {
     padding: 5px;
   }
+  .page_wrapper_auth .container {
+    width: 60%;
+    margin: 30px auto;
+  }
 }
-@media (max-width: 550px) {
+@media (max-width: 850px) {
   header {
     height: 100px;
   }
@@ -1142,14 +1180,17 @@ header .desktop {
   .mobile_nav {
     display: block;
   }
+  .page_wrapper_auth {
+    padding-top: 0px;
+  }
   .page_container,
   .page_wrapper {
-    padding-top: 50px;
+    padding-top: 100px;
   }
   .container {
     padding: 0;
-    width: 95%;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
   }
   header .left .logo {
     font-size: 16px;
@@ -1272,8 +1313,19 @@ header .desktop {
   }
 
   .shop_wrapper .left {
-    width: 100%;
-    background: #eee;
+    display: none;
+  }
+  .shop_wrapper .right {
+    margin-left: 0;
+  }
+  .shop_wrapper .sidebar_right {
+    display: none;
+  }
+  .nav_block {
+    background: #fff;
+    padding-top: 15px;
+  }
+  .nav_block h3 {
   }
   .nav_block,
   List,
@@ -1299,7 +1351,7 @@ header .desktop {
     display: block;
     width: 100%;
     min-width: 100%;
-    padding: 0 20px;
+    padding: 0px;
     border: none;
     clear: left;
     text-align: left;
@@ -1334,7 +1386,7 @@ header .desktop {
   }
   .card_block_shop .card_item_wrapper .action_container {
     width: 100%;
-    padding-left: 15px;
+    padding-left: 0px;
   }
   .card_block_shop .card_item_wrapper .tags {
     padding-left: 15px;
@@ -1390,7 +1442,22 @@ header .desktop {
   .user_product_head_block {
     display: none;
   }
+  .register_login_container {
+    display: block;
+    border: none;
+    border-top: 5px solid #999592;
+    -webkit-box-sizing: none;
+    box-sizing: none;
+    margin: 20px auto 110px auto;
+    width: 60%;
+    padding: 30px;
+    min-height: 430px;
+  }
 
+  .register_login_container .left,
+  .register_login_container .right {
+    display: block;
+  }
   .product_detail_wrapper {
     display: block;
   }

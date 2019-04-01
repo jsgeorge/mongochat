@@ -308,7 +308,7 @@ app.get("/api/users/logout", auth, (req, res) => {
   });
 });
 
-app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
+app.post("/api/users/uploadimage", auth, formidable(), (req, res) => {
   cloudinary.uploader.upload(
     req.files.file.path,
     result => {

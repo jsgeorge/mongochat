@@ -5,7 +5,7 @@ import MyButton from "../utils/button";
 
 const LoginRegister = () => {
   return (
-    <div className="page_wrapper">
+    <div className="page_wrapper_auth">
       <div className="container">
         <div className="register_login_container">
           <div className="left">

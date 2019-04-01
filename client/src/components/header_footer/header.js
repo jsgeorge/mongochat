@@ -21,11 +21,6 @@ class Header extends Component {
     open: false,
     page2: [
       {
-        name: "Home",
-        linkTo: "/",
-        public: true
-      },
-      {
         name: "Chats",
         linkTo: "/chats",
         public: true
@@ -265,7 +260,7 @@ class Header extends Component {
                 <div className="container">
                   <div className="left">
                     <div className="logo">
-                      <Link to="/">MongoChat</Link>
+                      <Link to="/chats">MongoChat</Link>
                     </div>
                   </div>
                   {/* <div className="srch-form">
@@ -342,12 +337,10 @@ class Header extends Component {
                   */
                     }
                   </div>
-                  <div className="right dektop tablet">
+                  <div className="right desktop">
                     <div className="top">
-                      {this.showLinks(this.state.user, false)}
-                    </div>
-                    <div className="bottom desktop desktopLinks">
                       {this.showLinks(this.state.page2, false)}
+                      {this.showLinks(this.state.user, false)}
                     </div>
                   </div>
                 </div>

@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getCategories } from "../../actions/category_actions";
 import { getChats } from "../../actions/chat_actions";
-import ChkBxBlock from "../utils/chkbx_block";
+import UserBlock from "../utils/user_block";
 import LoadMoreCards from "./load_more_cards";
 import { price } from "../utils/fixed_categories";
-
+import MyButton from "../utils/button";
+import CategoriesBlock from "../utils/categories_block";
 class Chats extends Component {
   ctgryId = ""; //"5c4b41ad2fc464438df10601"
   state = {
@@ -102,16 +103,17 @@ class Chats extends Component {
       <div className="page_wrapper">
         <div className="container">
           <div className="shop_wrapper">
-            {/* <div className="left">
-              <ChkBxBlock
+            <div className="left">
+              <UserBlock user={this.props.user.userData} />
+              {/* <ChkBxBlock
                 initState={true}
                 list={this.props.categories.byName}
                 title="Categories"
                 handleFilters={filters =>
                   this.handleFilters(filters, "category")
                 }
-              /> 
-            </div>*/}
+              />  */}
+            </div>
             <div className="right">
               <h4>
                 {this.state.srchStr ? (
@@ -126,6 +128,9 @@ class Chats extends Component {
                 loadMore={() => this.loadMoreCards()}
               />
             </div>
+            <div className="sidebar_right">
+              <CategoriesBlock list={this.props.categories.byName} />
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +141,8 @@ const mapStateToProps = state => {
   return {
     brands: state.brands,
     categories: state.categories,
-    chats: state.chats
+    chats: state.chats,
+    user: state.user
   };
 };
 export default connect(mapStateToProps)(Chats);
