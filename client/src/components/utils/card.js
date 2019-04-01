@@ -2,14 +2,31 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { AddToFavorites } from "../../actions/user_actions";
-import { chatLike } from "../../actions/chat_actions";
+import { DeleteFromFavorites } from "../../actions/user_actions";
 
+import { chatLike } from "../../actions/chat_actions";
+import myButton from "../utils/button";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faShoppingBag from "@fortawesome/fontawesome-free-solid/faShoppingBag";
 import faStar from "@fortawesome/fontawesome-free-solid/faStar";
 
 class Card extends Component {
+  state = {
+    open: false
+  };
+  handleClick = () => {
+    this.setState({ open: !this.state.open });
+  };
+  handleStar = () =>
+    this.state.open ? (
+      <FontAwesomeIcon
+        icon={faStar}
+        style={{ color: "rgb(25, 123, 189)", marginLeft: "4px" }}
+      />
+    ) : (
+      <FontAwesomeIcon icon={faStar} style={{ marginLeft: "4px" }} />
+    );
   renderCardImage(images) {
     if (images.length > 0) {
       return images[0].url;
@@ -22,12 +39,10 @@ class Card extends Component {
         <div className="action_container">
           <div className="tags">
             <div className="prod_info">
-              <div className="name">
-                <strong>
-                  user: {props.user.name} {props.user.lastname} text:
-                </strong>{" "}
-                {props.text}
-              </div>
+              <strong>
+                {props.user.name} {props.user.lastname}
+              </strong>
+              {props.text}
             </div>
             {props.images && props.images.length > 0 ? (
               <Link to={`/chats/${props._id}`}>
@@ -42,6 +57,7 @@ class Card extends Component {
               </Link>
             ) : null}
             <div className="actions">
+              comments {props.comments.length} likes: {props.likes}
               <div className="button_wrapp">
                 <Link className="card_link" to={`/chat/${props._id}`}>
                   More
@@ -60,16 +76,31 @@ class Card extends Component {
                 </button>
               </div>
               <div className="button_wrapp">
-                <button
-                  className="add_favorites_link"
-                  onClick={() => {
-                    props.user.userData.isAuth
-                      ? this.props.dispatch(AddToFavorites(props._id))
-                      : this.props.history.push("/login");
-                  }}
-                >
-                  <FontAwesomeIcon icon={faStar} style={{ color: "gray" }} />
-                </button>
+                {this.state.closed ? (
+                  <button
+                    className="add_favorites"
+                    onClick={() => {
+                      this.handleClick();
+                      // props.user.userData.isAuth
+                      //   ? this.props.dispatch(AddToFavorites(props._id))
+                      //   : this.props.history.push("/login");
+                    }}
+                  >
+                    {this.handleStar()}
+                  </button>
+                ) : (
+                  <button
+                    className="add_favorites"
+                    onClick={() => {
+                      this.handleClick();
+                      // props.user.userData.isAuth
+                      //   ? this.props.dispatch(DeleteFromFavorites(props._id))
+                      //   : this.props.history.push("/login");
+                    }}
+                  >
+                    {this.handleStar()}
+                  </button>
+                )}
               </div>
             </div>
           </div>

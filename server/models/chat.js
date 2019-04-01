@@ -24,6 +24,10 @@ const ChatSchema = mongoose.Schema(
       ref: "Category",
       required: true
     },
+    comments: {
+      type: Array,
+      default: []
+    },
     images: {
       type: Array,
       default: []

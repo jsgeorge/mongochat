@@ -224,21 +224,25 @@ select {
   font-weight: bold;
 }
 .card_link,
-.like_link,
-.add_favorites_link {
-  width: 60px;
-  border: 1px solid #dcdcdc;
-  padding: 5px 10px;
+.like_link {
+  border: none;
+  padding: 0px 2px;
   display: block;
   box-sizing: border-box;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
-  color: gray;
-  background: #eee;
+  color: rgb(25, 123, 189);
+  background: transparent;
   transition: all 200ms ease-in;
   cursor: pointer;
-  margin-left: 2px;
+  margin-left: 5px;
+}
+.add_favorites {
+  color: #ccc;
+  background: transparent;
+  box-shadow: none;
+  border: none;
 }
 .card_link:hover,
 .bag_link:hover,
@@ -588,7 +592,7 @@ footer .business_nfo .nfo {
   position: relative;
 }
 .card_item_wrapper .tags .prod_info {
-  min-height: 20px;
+  padding: 5px 0;
 }
 .card_item_wrapper .tags .brand,
 .card_item_wrapper .tags .name,
@@ -616,6 +620,8 @@ footer .business_nfo .nfo {
 .card_item_wrapper .actions {
   display: flex;
   padding: 15px 0 10px 0;
+  font-size: 12px;
+  color: gray;
 }
 
 .card_item_wrapper .actions .button_wrapp:nth-child(1) {
@@ -1148,7 +1154,7 @@ header .desktop {
 /*            MOBILE                         */
 /* ************************************************************/
 @media (min-width: 551px) and (max-width: 850px) {
-  .srch {
+  /* .srch {
     display: block;
     padding: 0;
     height: 40px;
@@ -1162,7 +1168,7 @@ header .desktop {
   }
   .srch button {
     padding: 5px;
-  }
+  } */
   .page_wrapper_auth .container {
     width: 60%;
     margin: 30px auto;
@@ -1186,6 +1192,11 @@ header .desktop {
   }
   .mobile_nav {
     display: block;
+  }
+  .home_wrapper {
+    margin: 0;
+    padding-top: 20%;
+    padding-bottom: 15%;
   }
   .page_wrapper_auth {
     padding-top: 0px;
@@ -1359,9 +1370,12 @@ header .desktop {
     width: 100%;
     min-width: 100%;
     padding: 0px;
+    padding-top: 10px;
+    margin: 0;
     border: none;
     clear: left;
     text-align: left;
+    border-bottom: 1px solid #ccc;
   }
   .card_items_wrapper {
   }
@@ -1390,22 +1404,30 @@ header .desktop {
     margin: 0;
   }
   .card_block .card_item_wrapper .actions {
+    margin-left: 15px;
   }
   .card_block_shop .card_item_wrapper .action_container {
     width: 100%;
     padding-left: 0px;
   }
   .card_block_shop .card_item_wrapper .tags {
-    padding-left: 15px;
+    padding-left: 0px;
   }
   .card_block_shop .card_item_wrapper .tags .brand,
   .card_block_shop .card_item_wrapper .tags .name,
   .card_block_shop .card_item_wrapper .tags .price {
     text-align: left;
-    margin: 5px;
+    margin: 0px;
     font-size: 14px;
   }
-  .prod_info {
+  .card_block_shop .card_item_wrapper .tags .prod_info {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+  .card_block_shop .card_item_wrapper .tags .prod_info,
+  .card_block_shop .card_item_wrapper .tags .actions {
     padding-left: 15px;
   }
 
