@@ -77,6 +77,19 @@ app.get("/api/chats/articles_by_id", (req, res) => {
     });
 });
 
+app.post("/api/chats/like", auth, (req, res) => {
+  Chat.findOneAndUpdate(
+    { _id: req.query.id },
+    { $inc: { likes: 1 } },
+    { new: true },
+    (err, doc) => {
+      if (err) return res.json({ editSuccess: false, err });
+      res.status(200).json({
+        editSuccess: true
+      });
+    }
+  );
+});
 //Get Products
 //
 //SORT PRODUCTS

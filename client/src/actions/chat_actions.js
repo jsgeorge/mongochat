@@ -4,7 +4,8 @@ import {
   GET_CHATS_BY_ID,
   GET_CHATS_BY_SELL,
   GET_CHATS_BY_ARRIVAL,
-  CHAT_ADD
+  CHAT_ADD,
+  CHAT_LIKE
 } from "./types";
 
 import { CHAT_SERVER } from "../components/utils/misc";
@@ -34,6 +35,15 @@ export function getChatsById(id, type) {
     .then(response => response.data);
   return {
     type: GET_CHATS_BY_ID,
+    payload: request
+  };
+}
+export function chatLike(id) {
+  const request = axios
+    .get(`${CHAT_SERVER}/like?id=${id}`)
+    .then(response => response.data);
+  return {
+    type: CHAT_LIKE,
     payload: request
   };
 }

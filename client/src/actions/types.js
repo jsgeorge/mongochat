@@ -15,6 +15,7 @@ export const GET_CHATS = "get_products";
 export const GET_CHATS_BY_SELL = "get_chats_by_sell";
 export const GET_CHATS_BY_ARRIVAL = "get_products_by_arrival";
 export const CHAT_ADD = "add_chat";
+export const CHAT_LIKE = "chat_like";
 //Brands
 export const CATEGORY_ADD = "add_category";
 //Categories

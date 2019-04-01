@@ -3,7 +3,8 @@ import {
   GET_CHATS_BY_ID,
   GET_CHATS_BY_SELL,
   GET_CHATS_BY_ARRIVAL,
-  CHAT_ADD
+  CHAT_ADD,
+  CHAT_LIKE
 } from "../actions/types";
 
 export default function(state = {}, action) {
@@ -25,6 +26,9 @@ export default function(state = {}, action) {
       return { ...state, byArrival: action.payload };
     case CHAT_ADD:
       return { ...state, addSuccess: action.payload };
+    case CHAT_LIKE:
+      return { ...state, editSuccess: action.payload };
+
     default:
       return state;
   }

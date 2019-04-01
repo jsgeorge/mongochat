@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { AddToFavorites } from "../../actions/user_actions";
+import { chatLike } from "../../actions/chat_actions";
+
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faShoppingBag from "@fortawesome/fontawesome-free-solid/faShoppingBag";
+import faStar from "@fortawesome/fontawesome-free-solid/faStar";
 
 class Card extends Component {
   renderCardImage(images) {
@@ -20,7 +23,10 @@ class Card extends Component {
           <div className="tags">
             <div className="prod_info">
               <div className="name">
-                <strong>{props.user.name} </strong> {props.text}
+                <strong>
+                  user: {props.user.name} {props.user.lastname} text:
+                </strong>{" "}
+                {props.text}
               </div>
             </div>
             {props.images && props.images.length > 0 ? (
@@ -43,14 +49,26 @@ class Card extends Component {
               </div>
               <div className="button_wrapp">
                 <button
-                  className="bag_link"
+                  className="like_link"
+                  onClick={() => {
+                    props.user.userData.isAuth
+                      ? this.props.dispatch(chatLike(props._id))
+                      : this.props.history.push("/login");
+                  }}
+                >
+                  Like
+                </button>
+              </div>
+              <div className="button_wrapp">
+                <button
+                  className="add_favorites_link"
                   onClick={() => {
                     props.user.userData.isAuth
                       ? this.props.dispatch(AddToFavorites(props._id))
                       : this.props.history.push("/login");
                   }}
                 >
-                  Add
+                  <FontAwesomeIcon icon={faStar} style={{ color: "gray" }} />
                 </button>
               </div>
             </div>

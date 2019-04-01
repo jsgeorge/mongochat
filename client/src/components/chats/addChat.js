@@ -70,6 +70,7 @@ class AddChat extends Component {
       });
     });
   }
+
   populateOptionFields(formdata, fileRows, type) {
     const fieldOptions = [];
     const newFormData = {
@@ -154,33 +155,36 @@ class AddChat extends Component {
               formdata={this.state.formdata.text}
               change={element => this.updateForm(element)}
             />
+            <div className="form-fields">
+              <div className="enroll_title">Category</div>
+              <FormField
+                id={"category"}
+                formdata={this.state.formdata.category}
+                change={element => this.updateForm(element)}
+              />
 
-            <div className="enroll_title">Category</div>
-            <FormField
-              id={"category"}
-              formdata={this.state.formdata.category}
-              change={element => this.updateForm(element)}
-            />
+              <FileUpload
+                imagesHandler={images => this.imagesHandler(images)}
+                reset={this.state.formSuccess}
+              />
+              {this.state.formSuccess ? (
+                <div className="success_label">
+                  Success - Record saved to database
+                </div>
+              ) : null}
+              {this.state.formError ? (
+                <div className="error_label">
+                  Error - Could not save product
+                </div>
+              ) : null}
 
-            <FileUpload
-              imagesHandler={images => this.imagesHandler(images)}
-              reset={this.state.formSuccess}
-            />
-            {this.state.formSuccess ? (
-              <div className="success_label">
-                Success - Record saved to database
-              </div>
-            ) : null}
-            {this.state.formError ? (
-              <div className="error_label">Error - Could not save product</div>
-            ) : null}
-
-            <button
-              onClick={event => this.submitForm(event)}
-              className="button"
-            >
-              Submit
-            </button>
+              <button
+                onClick={event => this.submitForm(event)}
+                className="button"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </LayoutAdmin>

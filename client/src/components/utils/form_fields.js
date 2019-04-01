@@ -41,6 +41,7 @@ const FormField = ({ formdata, id, change }) => {
               {...formdata.config}
               value={formdata.value}
               onChange={event => change({ event, id })}
+              rows="15"
             />
             {showError()}
           </div>
