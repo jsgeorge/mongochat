@@ -27,6 +27,11 @@ const userSchema = mongoose.Schema({
     require: true,
     maxlength: 100
   },
+  username: {
+    type: String,
+    require: false,
+    maxlength: 100
+  },
   favorites: {
     type: Array,
     default: []

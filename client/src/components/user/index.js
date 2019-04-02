@@ -13,9 +13,11 @@ const Dashboard = ({ user }) => {
         <div className="user_nfo_panel">
           <h3>USER INFORMATION</h3>
           <div>
+            {user.userData.username ? <h2>{user.userData.username}</h2> : null}
             <span>
               {user.userData.name} {user.userData.lastname}
             </span>
+
             <span>{user.userData.email}</span>
           </div>
           <MyButton type="default" title="Edit account" linkTo="/user/edit" />
@@ -23,7 +25,7 @@ const Dashboard = ({ user }) => {
           {/* <Link to="/user/edit">Edit Account</Link> */}
         </div>
         <div className="user_nfo_panel">
-          <h3>PURCHASE HISTORY</h3>
+          <h3>FAVORITES</h3>
           {/* <PurchaseHistory products={user.userData.history} /> */}
         </div>
       </div>

@@ -193,6 +193,7 @@ app.get("/api/users/auth", auth, (req, res) => {
     email: req.user.email,
     name: req.user.name,
     lastname: req.user.lastname,
+    username: req.user.username,
     role: req.user.role,
     cart: req.user.cart,
     history: req.user.history

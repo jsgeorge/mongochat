@@ -40,9 +40,16 @@ class Card extends Component {
           <div className="tags">
             <div className="prod_info">
               <strong>
-                {props.user.name} {props.user.lastname}
+                <Link to={`/chats/user/${props.user._id} `}>User</Link>
+                {props.user.username ? (
+                  <span>{props.user.username}</span>
+                ) : (
+                  <span>
+                    {props.user.name} {props.user.lastname}
+                  </span>
+                )}
               </strong>
-              {props.text}
+              <span className="item-text">{props.text}</span>
             </div>
             {props.images && props.images.length > 0 ? (
               <Link to={`/chats/${props._id}`}>

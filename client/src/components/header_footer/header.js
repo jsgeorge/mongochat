@@ -31,6 +31,11 @@ class Header extends Component {
         public: true
       },
       {
+        name: "Search",
+        linkTo: "/chats/search",
+        public: true
+      },
+      {
         name: "Favorites",
         linkTo: "/user/favorites",
         public: false
@@ -125,14 +130,13 @@ class Header extends Component {
       </Link>
     );
 
-  cartLink = (item, i) => {
+  searchLink = (item, i) => {
     const user = this.props.user.userData;
 
     return (
-      <div className="cart_link" key={i}>
+      <div className="search_link" key={i}>
         <Link to={item.linkTo}>
-          <span>{user.cart ? user.cart.length : 0}</span>
-          <FontAwesomeIcon icon={faShoppingCart} />
+          <FontAwesomeIcon icon={faSearch} />
         </Link>
       </div>
     );
@@ -163,7 +167,10 @@ class Header extends Component {
           {user ? (
             <span>
               {" "}
-              <FontAwesomeIcon icon={faPlus} />{" "}
+              <FontAwesomeIcon
+                icon={faPlus}
+                style={{ color: "rgb(25, 123, 189)" }}
+              />{" "}
             </span>
           ) : null}
         </Link>
@@ -176,7 +183,7 @@ class Header extends Component {
         style={{
           background: "transparent",
           color: "#fff",
-          padding: "15px 0",
+          padding: "15px",
           borderBottom: "1px solid #555"
         }}
         key={i}
@@ -230,8 +237,8 @@ class Header extends Component {
       // }
       if (item.name === "Add") {
         return this.addLink(item, i);
-      } else if (item.name === "Cart") {
-        return this.cartLink(item, i);
+      } else if (item.name === "Search") {
+        return this.searchLink(item, i);
       } else if (item.name === "Account") {
         return this.accountLink(item, i);
       } else {

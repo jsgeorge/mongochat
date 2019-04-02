@@ -11,13 +11,11 @@ const ChatSchema = mongoose.Schema(
     text: {
       requried: true,
       type: String,
-      unique: 1,
-      maxlength: 100
+      maxlength: 500
     },
     likes: {
       requried: true,
-      type: Number,
-      maxlength: 255
+      type: Number
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

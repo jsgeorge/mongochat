@@ -57,7 +57,7 @@ class Login2 extends Component {
         if (response.payload.loginSuccess) {
           console.log(response.payload);
 
-          this.props.history.push("/user/dashboard");
+          this.props.history.push("/chats");
         } else {
           this.setState({
             formError: true,

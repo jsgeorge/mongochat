@@ -352,11 +352,12 @@ header .container .right a {
   margin-left: 20px;
   color: #111;
 }
-header .cart_link,
+header .search_link,
 .account_link,
 .add_link {
   display: inline-block;
   position: relative;
+  margin: 0;
 }
 .transp-btn {
   background: transparent;
@@ -405,6 +406,7 @@ header .log_out_link {
 .srch {
   display: none;
 }
+
 /*============================
             FOOTER
 ==============================*/
@@ -593,6 +595,12 @@ footer .business_nfo .nfo {
 }
 .card_item_wrapper .tags .prod_info {
   padding: 5px 0;
+}
+.cart_item_wrapper .tags .prod_info a {
+  color: blue;
+}
+.item-text {
+  color: gray;
 }
 .card_item_wrapper .tags .brand,
 .card_item_wrapper .tags .name,
@@ -928,9 +936,9 @@ footer .business_nfo .nfo {
 }
 
 .user_container .user_nfo_panel {
-  background: #f8f8f8;
+  background: #fff;
   padding: 20px;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .user_container .user_nfo_panel h1 {
@@ -1175,6 +1183,9 @@ header .desktop {
   }
 }
 @media (max-width: 850px) {
+  body {
+    background: #fff;
+  }
   header {
     height: 100px;
   }
@@ -1246,7 +1257,8 @@ header .desktop {
     background: #fff;
   }
   .nav2 a {
-    margin: 15px;
+    margin: 0 20px;
+
     height: 20px;
     font-size: 12px;
   }

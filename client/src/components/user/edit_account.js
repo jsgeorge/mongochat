@@ -55,6 +55,20 @@ class EditAccount extends Component {
         },
         valid: false,
         validationMessage: ""
+      },
+      username: {
+        element: "input",
+        value: "",
+        config: {
+          name: "username_input",
+          type: "text",
+          placeholder: "Enter username"
+        },
+        validation: {
+          required: false
+        },
+        valid: true,
+        validationMessage: ""
       }
     }
   };
@@ -136,9 +150,8 @@ class EditAccount extends Component {
   render() {
     return (
       <LayoutAdmin>
-        <div className="signin_wrapper">
+        <div className="user_nfo_panel">
           <h2>Edit Account</h2>
-          <h5>{this.props.user.userData.email}</h5>
           <form onSubmit={event => this.submitForm(event)}>
             <div className="enroll_title">Email</div>
             <FormField
@@ -157,6 +170,12 @@ class EditAccount extends Component {
             <FormField
               id={"lastname"}
               formdata={this.state.formdata.lastname}
+              change={element => this.updateForm(element)}
+            />
+            <div className="enroll_title">Username</div>
+            <FormField
+              id={"username"}
+              formdata={this.state.formdata.username}
               change={element => this.updateForm(element)}
             />
             {this.state.formError ? (

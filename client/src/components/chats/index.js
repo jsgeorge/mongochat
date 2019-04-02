@@ -120,6 +120,7 @@ class Chats extends Component {
                   <span>Search: {this.state.srchStr}</span>
                 ) : null}
               </h4>
+              {console.log(this.props.chats.view)}
               <LoadMoreCards
                 grid={this.state.grid}
                 limit={this.state.limit}
