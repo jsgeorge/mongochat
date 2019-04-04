@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import FormField from "../utils/form_fields";
 import { validate } from "../utils/misc";
-import MyButton from "../utils/button";
+//import MyButton from "../utils/button";
 
 import { UserLogin } from "../../actions/user_actions";
 class Login2 extends Component {
@@ -55,8 +55,6 @@ class Login2 extends Component {
     if (formIsValid) {
       this.props.dispatch(UserLogin(dataToSubmit)).then(response => {
         if (response.payload.loginSuccess) {
-          console.log(response.payload);
-
           this.props.history.push("/chats");
         } else {
           this.setState({

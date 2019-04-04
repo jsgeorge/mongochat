@@ -8,7 +8,7 @@ import { AddToFavorites } from "../../../actions/user_actions";
 
 class Product extends Component {
   componentDidMount() {
-    const userId = this.props.user.userData._id;
+    //const userId = this.props.user.userData._id;
     const prodId = this.props.match.params.id;
     this.props.dispatch(getChatsById(prodId, "single"));
   }
@@ -20,7 +20,7 @@ class Product extends Component {
       : this.props.history.push("/login");
   }
   render() {
-    const detail = this.props.chats.byId;
+    // const detail = this.props.chats.byId;
     return (
       <div className="page_wrapper">
         <div className="page_top">

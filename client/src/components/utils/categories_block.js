@@ -17,7 +17,7 @@ class CategoriesBlock extends Component {
   renderNavs = () =>
     this.props.list
       ? this.props.list.map(nav => (
-          <div>
+          <div key={nav._id}>
             <ListItem key={nav._id} style={{ padding: "10px 15px" }}>
               <ListItemText primary={nav.name} />
             </ListItem>

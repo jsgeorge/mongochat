@@ -7,7 +7,12 @@ import {
   USER_LOGOUT,
   USER_ADD_TO_FAVORITES,
   USER_DELETE_FROM_FAVORITES,
-  USER_GET_FAVORITE_ITEMS
+  USER_GET_FAVORITE_ITEMS,
+  USER_ADD_TO_FOLLOWING,
+  USER_DELETE_FROM_FOLLOWING,
+  USER_GET_FOLLOWING_USERS,
+  GET_USERS,
+  GET_USERS_BY_ID
 } from "./types";
 import { USER_SERVER } from "../components/utils/misc";
 import { CHAT_SERVER } from "../components/utils/misc";
@@ -39,9 +44,9 @@ export function UserEdit(dataToSubmit) {
     payload: request
   };
 }
-export function AddToFavorites(_id) {
+export function AddToFavorites(id) {
   const request = axios
-    .post(`${USER_SERVER}/addtoFavorites?prodId=${_id}`)
+    .post(`${USER_SERVER}/addtoFavorites?id=${id}`)
     .then(response => response.data);
   return {
     type: USER_ADD_TO_FAVORITES,
@@ -50,33 +55,19 @@ export function AddToFavorites(_id) {
 }
 export function DeleteFromFavorites(id) {
   const request = axios
-    .get(`${USER_SERVER}/deletefromFavorites?_id=${id}`)
-    .then(response => {
-      response.data.cart.forEach(item => {
-        response.data.cartDetail.forEach((k, i) => {
-          if (item.id === k._id) {
-            response.data.cartDetail[i].quantity = item.quantity;
-          }
-        });
-      });
-      return response.data;
-    });
+    .get(`${USER_SERVER}/deletefromFavorites?id=${id}`)
+    .then(response => response.data);
+
   return {
     type: USER_DELETE_FROM_FAVORITES,
     payload: request
   };
 }
-export function GetFavoriteItems(favoriteItems, userFavorites) {
+
+export function GetFavorites(cartItems, userCart) {
   const request = axios
-    .get(`${CHAT_SERVER}/articles_by_id?id=${favoriteItems}&type=array`)
+    .get(`${CHAT_SERVER}/articles_by_id?id=${cartItems}&type=array`)
     .then(response => {
-      userFavorites.forEach(item => {
-        response.data.forEach((k, i) => {
-          if (item.id === k._id) {
-            response.data[i].quantity = item.quantity;
-          }
-        });
-      });
       return response.data;
     });
 
@@ -85,7 +76,38 @@ export function GetFavoriteItems(favoriteItems, userFavorites) {
     payload: request
   };
 }
+export function AddToFollowing(id) {
+  const request = axios
+    .post(`${USER_SERVER}/addtoFollowing?id=${id}`)
+    .then(response => response.data);
+  return {
+    type: USER_ADD_TO_FOLLOWING,
+    payload: request
+  };
+}
+export function DeleteFromFollowing(id) {
+  const request = axios
+    .get(`${USER_SERVER}/deletefromFollowing?id=${id}`)
+    .then(response => response.data);
 
+  return {
+    type: USER_DELETE_FROM_FOLLOWING,
+    payload: request
+  };
+}
+
+export function GetUsersById(cartItems, userCart) {
+  const request = axios
+    .get(`${CHAT_SERVER}/articles_by_id?id=${cartItems}&type=array`)
+    .then(response => {
+      return response.data;
+    });
+
+  return {
+    type: USER_GET_FAVORITE_ITEMS,
+    payload: request
+  };
+}
 export function UserLogout() {
   const request = axios
     .get(`${USER_SERVER}/logout`)
@@ -101,6 +123,25 @@ export function auth() {
     .then(response => response.data);
   return {
     type: AUTH_USER,
+    payload: request
+  };
+}
+export function getUsers() {
+  const request = axios
+    .get(`${USER_SERVER}/list`)
+    .then(response => response.data);
+  return {
+    type: GET_USERS,
+    payload: request
+  };
+}
+
+export function getUsersById(ids, type) {
+  const request = axios
+    .get(`${USER_SERVER}/by_id?type=${type}&id=${ids}`)
+    .then(response => response.data);
+  return {
+    type: GET_USERS_BY_ID,
     payload: request
   };
 }

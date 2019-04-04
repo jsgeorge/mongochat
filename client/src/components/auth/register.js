@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import FormField from "../utils/form_fields";
 import { validate } from "../utils/misc";
 import MyButton from "../utils/button";

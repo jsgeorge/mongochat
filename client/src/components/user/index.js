@@ -1,7 +1,7 @@
 import React from "react";
 import LayoutAdmin from "../../hoc/adminLayout";
-import PurchaseHistory from "./puchase_history";
-import { Link } from "react-router-dom";
+//import PurchaseHistory from "./puchase_history";
+//import { Link } from "react-router-dom";
 import MyButton from "../utils/button";
 import LogoutBtn from "../utils/logout_btn";
 
@@ -23,6 +23,10 @@ const Dashboard = ({ user }) => {
           <MyButton type="default" title="Edit account" linkTo="/user/edit" />
           <LogoutBtn />
           {/* <Link to="/user/edit">Edit Account</Link> */}
+        </div>
+        <div>
+          Favorites {user.userData.favorites.length} Following:{" "}
+          {user.userData.following.length}
         </div>
         <div className="user_nfo_panel">
           <h3>FAVORITES</h3>

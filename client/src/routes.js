@@ -11,6 +11,7 @@ import EditAccount from "./components/user/edit_account";
 import Chats from "./components/chats";
 import Chat from "./components/chats/chat";
 import AddChat from "./components/chats/addChat";
+import UserList from "./components/users";
 import Cart from "./components/cart";
 // class App extends Component {
 //   render() {
@@ -31,9 +32,9 @@ const Routes = () => {
           exact
           component={Auth(Chat, null)}
         />
-        <Route path="/chat/add" exact component={Auth(AddChat, null)} />
+        <Route path="/chat/add" exact component={Auth(AddChat, true)} />
 
-        <Route path="/chats/:id" exact component={Auth(Chat, null)} />
+        <Route path="/chats/:id" exact component={Auth(Chat, true)} />
         {/* <Route path="/user/favorites" exact component={Auth(Favorites, true)} /> */}
 
         <Route path="/user/edit" exact component={Auth(EditAccount, true)} />
@@ -41,6 +42,9 @@ const Routes = () => {
 
         <Route path="/login" exact component={Auth(LoginRegister, false)} />
         <Route path="/register" exact component={Auth(Register, false)} />
+        <Route path="/user/list" exact component={Auth(UserList, true)} />
+        <Route path="/user/favorites" exact component={Auth(Cart, true)} />
+        
         <Route path="/" exact component={Auth(Home, null)} />
       </Switch>
     </Layout>

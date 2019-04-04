@@ -5,7 +5,7 @@ const CardBlockShop = props => {
   const renderCards = () =>
     props.list
       ? props.list.map(card => (
-          <div className="card_item_wrapper">
+          <div className="card_item_wrapper" key={card._id}>
             {<Card key={card._id} {...card} grid={props.grid} />}
           </div>
         ))
@@ -16,7 +16,7 @@ const CardBlockShop = props => {
         <div className="card_items_wrapper">
           {props.list ? (
             props.list.length === 0 ? (
-              <div className="no_result">No products found</div>
+              <div className="no_result">No chats yet</div>
             ) : null
           ) : null}
           {renderCards(props.list)}

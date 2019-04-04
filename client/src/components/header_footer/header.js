@@ -11,10 +11,9 @@ import faUser from "@fortawesome/fontawesome-free-solid/faUser";
 import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
 import faPlus from "@fortawesome/fontawesome-free-solid/faPlus";
 
-import Collapse from "@material-ui/core/Collapse";
-import List from "@material-ui/core/List";
+//import Collapse from "@material-ui/core/Collapse";
+//import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import { orange } from "@material-ui/core/colors";
 
 class Header extends Component {
   state = {
@@ -32,7 +31,7 @@ class Header extends Component {
       },
       {
         name: "Search",
-        linkTo: "/chats/search",
+        linkTo: "/user/list",
         public: true
       },
       {
@@ -131,7 +130,7 @@ class Header extends Component {
     );
 
   searchLink = (item, i) => {
-    const user = this.props.user.userData;
+    //const user = this.props.user.userData;
 
     return (
       <div className="search_link" key={i}>
@@ -188,7 +187,6 @@ class Header extends Component {
         }}
         key={i}
         className="log_out_link"
-        key={i}
         onClick={() => this.logoutHandler()}
       >
         Log Out
@@ -364,9 +362,6 @@ class Header extends Component {
               </form>
             </div> */}
               <div className="nav2 mobile">
-                {/* <Link to={"/"}>Home</Link>
-              <Link to={"/products"}>Shop</Link>
-              <Link to={"Specials"}>Specials</Link> */}
                 {this.showLinks(this.state.page2, false)}
               </div>
             </AppBar>

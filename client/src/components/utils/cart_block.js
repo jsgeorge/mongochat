@@ -1,7 +1,7 @@
 import React from "react";
 import CartItem from "./cart_item";
 
-const CartBlock = ({ products, removeItem }) => {
+const CartBlock = ({ chats, removeItem }) => {
   const renderCardImage = images => {
     if (images.length > 0) {
       return images[0].url;
@@ -10,51 +10,35 @@ const CartBlock = ({ products, removeItem }) => {
     }
   };
   const renderItems = props =>
-    products.cartDetail
-      ? products.cartDetail.map(product => (
-          <div className="user_product_block" key={product._id}>
-            <div className="item">
-              <div
+    chats.chatDetail
+      ? chats.chatDetail.map(chat => (
+          <div className="user_product_block" key={chat._id}>
+            <div className="item image">
+              {/* <div
                 className="image"
                 style={{
                   background: `url(${renderCardImage(
                     product.images
                   )}) no-repeat`
                 }}
-              />
+              /> */}
             </div>
-            <div className="item name desktop tablet">
-              <h3 />
-              {product.brand.name} {product.name}
-            </div>
-            <div className="item desktop tablet">
-              <h3 />${product.price}{" "}
-            </div>
-
-            <div className="item desktop tablet">
-              <h3 />
-
-              {product.quantity}
-            </div>
-            <div className="item desktop tablet">
-              <h3 />${product.price * product.quantity}
+            <div className="item name">
+              {chat.author.username ? (
+                <span>{chat.author.username}</span>
+              ) : (
+                <span>
+                  {chat.author.name} {chat.author.lastname}
+                </span>
+              )}
             </div>
 
-            <div className="item mobile item-info">
-              {product.brand.name} {product.name}
-              <div className="priceQty">${product.price} </div>
-              <div className="priceQty qty">
-                Qty
-                {product.quantity}
-              </div>
-              <div className="priceQty">
-                Total ${product.price * product.quantity}
-              </div>
-            </div>
-            <div className="item mobile">
+            <div className="item  text">{chat.text} </div>
+
+            <div>
               <h3 />
               <button
-                onClick={() => removeItem(product._id)}
+                onClick={() => removeItem(chat._id)}
                 className="cart_remove_btn"
               >
                 x
@@ -71,31 +55,7 @@ const CartBlock = ({ products, removeItem }) => {
 
   return (
     <div className="card_block_shop">
-      <div className="card_items_wrapper">
-        <div>
-          <div className="user_product_head_block">
-            <div className="item">Item</div>
-            <div className="item" />
-            <div className="item">Price</div>
-            <div className="item">Quantity</div>
-            <div className="item">Total Price</div>
-            <div className="item" />
-          </div>
-        </div>
-        {/* {props.cart.forEach(item => {
-            renderCartItem(item);
-          })} */}
-        {/* {props.cart ? (
-            props.cart.length === 0 ? (
-              <div className="no_result">No products found</div>
-            ) : null
-          ) : null}
-          {props.cart.map(item => (
-            <CartItem key={item._id} {...item} />
-          ))} */}
-        {renderItems()}
-        {/* </table> */}
-      </div>
+      <div className="card_items_wrapper">{renderItems()}</div>
     </div>
   );
 };

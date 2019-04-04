@@ -1,7 +1,7 @@
 import React from "react";
-import LayoutAdmin from "../../hoc/adminLayout";
-import { Link } from "react-router-dom";
-import MyButton from "../utils/button";
+// import LayoutAdmin from "../../hoc/adminLayout";
+// import { Link } from "react-router-dom";
+// import MyButton from "../utils/button";
 
 const Dashboard = ({ user }) => {
   return (
@@ -16,6 +16,11 @@ const Dashboard = ({ user }) => {
         )}
       </div>
       <span>{user.email}</span>
+      <div>
+        <span>
+          Favorites {user.favorites.length} Following: {user.following.length}
+        </span>
+      </div>
     </div>
   );
 };

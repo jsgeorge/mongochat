@@ -36,6 +36,10 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: []
   },
+  following: {
+    type: Array,
+    default: []
+  },
   likes: {
     type: Number,
     require: false

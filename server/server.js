@@ -42,7 +42,7 @@ app.post("/api/chats/article", auth, (req, res) => {
   console.log(req.body);
 
   let newChat = {};
-  newChat.user = req.user._id;
+  newChat.author = req.user._id;
   newChat.text = req.body.text;
   newChat.category = req.body.category;
   newChat.images = req.body.images;
@@ -71,6 +71,7 @@ app.get("/api/chats/articles_by_id", (req, res) => {
 
   Chat.find({ _id: { $in: items } })
     //Product.find({ _id: items })
+    .populate("author")
     .populate("category")
     .exec((err, docs) => {
       return res.status(200).send(docs);
@@ -118,7 +119,7 @@ app.post("/api/chats/view", (req, res) => {
   }
   console.log(findArgs);
   Chat.find(findArgs)
-    .populate("user")
+    .populate("author")
     .populate("category")
     .sort([[sortBy, order]])
     .skip(skip)
@@ -138,6 +139,7 @@ app.get("/api/chats/articles", (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 100;
 
   Chat.find()
+    .populate("author")
     .populate("category")
     .sort([[sortBy, order]])
     .limit(limit)
@@ -195,8 +197,8 @@ app.get("/api/users/auth", auth, (req, res) => {
     lastname: req.user.lastname,
     username: req.user.username,
     role: req.user.role,
-    cart: req.user.cart,
-    history: req.user.history
+    favorites: req.user.favorites,
+    following: req.user.following
   });
 });
 
@@ -254,65 +256,80 @@ app.post("/api/users/login", (req, res) => {
     });
   });
 });
-app.post("/api/users/addtoFavorits", auth, (req, res) => {
-  User.findOne({ _id: req.user._id }, (err, doc) => {
-    let duplicate = false;
-    doc.cart.forEach(item => {
-      if (item.id == req.query.prodId) duplicate = true;
-    });
-    if (duplicate) {
-      User.findOneAndUpdate(
-        {
-          _id: req.user._id,
-          "cart.id": mongoose.Types.ObjectId(req.query.prodId)
-        },
-        { $inc: { "cart.$.quantity": 1 } },
-        { new: true },
-        () => {
-          if (err) return res.json({ success: false, err });
-          res.status(200).json(doc.cart);
-        }
-      );
-    } else {
-      User.findOneAndUpdate(
-        { _id: req.user._id },
-        {
-          $push: {
-            cart: {
-              id: mongoose.Types.ObjectId(req.query.prodId),
-              quantity: 1,
-              date: Date.now()
-            }
-          }
-        },
-        { new: true },
-        (err, doc) => {
-          if (err) return res.json({ success: false, err });
-          res.status(200).json(doc.cart);
-        }
-      );
+app.post("/api/users/addtoFavorites", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $push: { favorites: { id: mongoose.Types.ObjectId(req.query.id) } } },
+    { new: true },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({
+        editSuccess: true
+      });
     }
-  });
+  );
 });
 
 app.get("/api/users/deletefromFavorites", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
-    { $pull: { cart: { id: mongoose.Types.ObjectId(req.query._id) } } },
+    { $pull: { favorites: { id: mongoose.Types.ObjectId(req.query.id) } } },
     { new: true },
     (err, doc) => {
-      let cart = doc.cart;
-      let array = cart.map(item => {
-        return mongoose.Types.ObjectId(item.id);
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({
+        editSuccess: true
       });
-
-      Chat.find({ " _id": { $in: array } })
-        .populate("category")
-        .exec((err, cardDetail) => {
-          return res.status(200).json({ cardDetail, cart });
-        });
     }
   );
+});
+
+app.post("/api/users/addtoFollowing", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $push: { following: { id: mongoose.Types.ObjectId(req.query.id) } } },
+    { new: true },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({
+        editSuccess: true
+      });
+    }
+  );
+});
+
+app.post("/api/users/deletfromFollowing", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $pull: { following: { id: mongoose.Types.ObjectId(req.query.id) } } },
+    { new: true },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({
+        editSuccess: true
+      });
+    }
+  );
+});
+
+app.get("/api/users/by_id", (req, res) => {
+  let type = req.query.type;
+  let items = req.query.id;
+  if (type === "array") {
+    let ids = req.query.id.split(",");
+    items = [];
+    items = ids.map(item => {
+      return mongoose.Types.ObjectId(item);
+    });
+  }
+
+  User.find({ _id: { $in: items } })
+    //Product.find({ _id: items })
+    .populate("following")
+    .populate("favorites")
+    .exec((err, docs) => {
+      return res.status(200).send(docs);
+    });
 });
 
 app.get("/api/users/logout", auth, (req, res) => {
@@ -338,6 +355,16 @@ app.post("/api/users/uploadimage", auth, formidable(), (req, res) => {
   );
 });
 
+app.get("/api/users/list", (req, res) => {
+  // let order = req.query.order ? req.query.order : "asc";
+  // let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  // let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+
+  User.find().exec((err, users) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).send(users);
+  });
+});
 //default
 if (process.env.NODE_ENV === "production") {
   const path = require("path");

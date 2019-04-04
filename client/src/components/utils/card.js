@@ -5,10 +5,9 @@ import { AddToFavorites } from "../../actions/user_actions";
 import { DeleteFromFavorites } from "../../actions/user_actions";
 
 import { chatLike } from "../../actions/chat_actions";
-import myButton from "../utils/button";
+//import myButton from "../utils/button";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import faShoppingBag from "@fortawesome/fontawesome-free-solid/faShoppingBag";
 import faStar from "@fortawesome/fontawesome-free-solid/faStar";
 
 class Card extends Component {
@@ -40,15 +39,14 @@ class Card extends Component {
           <div className="tags">
             <div className="prod_info">
               <strong>
-                <Link to={`/chats/user/${props.user._id} `}>User</Link>
-                {props.user.username ? (
-                  <span>{props.user.username}</span>
+                {props.author.username ? (
+                  <span>{props.author.username}</span>
                 ) : (
                   <span>
-                    {props.user.name} {props.user.lastname}
+                    {props.author.name} {props.author.lastname}
                   </span>
                 )}
-              </strong>
+              </strong>{" "}
               <span className="item-text">{props.text}</span>
             </div>
             {props.images && props.images.length > 0 ? (
@@ -88,9 +86,10 @@ class Card extends Component {
                     className="add_favorites"
                     onClick={() => {
                       this.handleClick();
-                      // props.user.userData.isAuth
-                      //   ? this.props.dispatch(AddToFavorites(props._id))
-                      //   : this.props.history.push("/login");
+                      //props.user.userData.isAuth
+                      // ? this.props.dispatch(DeleteFromFavorites(props._id))
+                      // : this.props.history.push("/login");
+                      console.log("Favorite Deleted");
                     }}
                   >
                     {this.handleStar()}
@@ -100,9 +99,10 @@ class Card extends Component {
                     className="add_favorites"
                     onClick={() => {
                       this.handleClick();
-                      // props.user.userData.isAuth
-                      //   ? this.props.dispatch(DeleteFromFavorites(props._id))
-                      //   : this.props.history.push("/login");
+                      console.log("Favorite Added");
+                      props.user.userData.isAuth
+                        ? this.props.dispatch(AddToFavorites(props._id))
+                        : this.props.history.push("/login");
                     }}
                   >
                     {this.handleStar()}

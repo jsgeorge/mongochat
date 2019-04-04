@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ChatSchema = mongoose.Schema(
   {
-    user: {
+    author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true
@@ -15,7 +15,8 @@ const ChatSchema = mongoose.Schema(
     },
     likes: {
       requried: true,
-      type: Number
+      type: Number,
+      default: 0
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

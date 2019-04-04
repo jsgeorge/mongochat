@@ -5,8 +5,9 @@ import { getChats } from "../../actions/chat_actions";
 import UserBlock from "../utils/user_block";
 import LoadMoreCards from "./load_more_cards";
 import { price } from "../utils/fixed_categories";
-import MyButton from "../utils/button";
+//import MyButton from "../utils/button";
 import CategoriesBlock from "../utils/categories_block";
+
 class Chats extends Component {
   ctgryId = ""; //"5c4b41ad2fc464438df10601"
   state = {
@@ -54,17 +55,7 @@ class Chats extends Component {
       return -1;
     }
   };
-  handlePrice = value => {
-    const data = price;
-    let array = [];
 
-    for (let key in data) {
-      if (data[key]._id === parseInt(value, 10)) {
-        array = data[key].array;
-      }
-    }
-    return array;
-  };
   handleFilters = (filters, type) => {
     const newFilters = { ...this.state.filters };
     newFilters[type] = filters;
@@ -105,14 +96,6 @@ class Chats extends Component {
           <div className="shop_wrapper">
             <div className="left">
               <UserBlock user={this.props.user.userData} />
-              {/* <ChkBxBlock
-                initState={true}
-                list={this.props.categories.byName}
-                title="Categories"
-                handleFilters={filters =>
-                  this.handleFilters(filters, "category")
-                }
-              />  */}
             </div>
             <div className="right">
               <h4>
@@ -120,7 +103,7 @@ class Chats extends Component {
                   <span>Search: {this.state.srchStr}</span>
                 ) : null}
               </h4>
-              {console.log(this.props.chats.view)}
+
               <LoadMoreCards
                 grid={this.state.grid}
                 limit={this.state.limit}
@@ -140,7 +123,6 @@ class Chats extends Component {
 }
 const mapStateToProps = state => {
   return {
-    brands: state.brands,
     categories: state.categories,
     chats: state.chats,
     user: state.user

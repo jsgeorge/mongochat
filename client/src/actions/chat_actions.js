@@ -40,7 +40,7 @@ export function getChatsById(id, type) {
 }
 export function chatLike(id) {
   const request = axios
-    .get(`${CHAT_SERVER}/like?id=${id}`)
+    .post(`${CHAT_SERVER}/like?id=${id}`)
     .then(response => response.data);
   return {
     type: CHAT_LIKE,
