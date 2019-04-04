@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { AddToFavorites } from "../../actions/user_actions";
-import { DeleteFromFavorites } from "../../actions/user_actions";
+//import { DeleteFromFavorites } from "../../actions/user_actions";
 
 import { chatLike } from "../../actions/chat_actions";
 //import myButton from "../utils/button";

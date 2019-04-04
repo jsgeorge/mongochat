@@ -64,18 +64,6 @@ export function DeleteFromFavorites(id) {
   };
 }
 
-export function GetFavorites(cartItems, userCart) {
-  const request = axios
-    .get(`${CHAT_SERVER}/articles_by_id?id=${cartItems}&type=array`)
-    .then(response => {
-      return response.data;
-    });
-
-  return {
-    type: USER_GET_FAVORITE_ITEMS,
-    payload: request
-  };
-}
 export function AddToFollowing(id) {
   const request = axios
     .post(`${USER_SERVER}/addtoFollowing?id=${id}`)
@@ -96,7 +84,7 @@ export function DeleteFromFollowing(id) {
   };
 }
 
-export function GetUsersById(cartItems, userCart) {
+export function GetFavorites(cartItems, userCart) {
   const request = axios
     .get(`${CHAT_SERVER}/articles_by_id?id=${cartItems}&type=array`)
     .then(response => {
@@ -105,6 +93,16 @@ export function GetUsersById(cartItems, userCart) {
 
   return {
     type: USER_GET_FAVORITE_ITEMS,
+    payload: request
+  };
+}
+export function GetFowllowingUsers(cartItems, userCart) {
+  const request = axios.get(`${USER_SERVER}/following`).then(response => {
+    return response.data;
+  });
+
+  return {
+    type: USER_GET_FOLLOWING_USERS,
     payload: request
   };
 }

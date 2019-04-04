@@ -1,5 +1,5 @@
 import React from "react";
-import CartItem from "./cart_item";
+///import CartItem from "./cart_item";
 
 const CartBlock = ({ chats, removeItem }) => {
   const renderCardImage = images => {
@@ -14,14 +14,12 @@ const CartBlock = ({ chats, removeItem }) => {
       ? chats.chatDetail.map(chat => (
           <div className="user_product_block" key={chat._id}>
             <div className="item image">
-              {/* <div
+              <div
                 className="image"
                 style={{
-                  background: `url(${renderCardImage(
-                    product.images
-                  )}) no-repeat`
+                  background: `url(${renderCardImage(chat.images)}) no-repeat`
                 }}
-              /> */}
+              />
             </div>
             <div className="item name">
               {chat.author.username ? (
@@ -36,7 +34,6 @@ const CartBlock = ({ chats, removeItem }) => {
             <div className="item  text">{chat.text} </div>
 
             <div>
-              <h3 />
               <button
                 onClick={() => removeItem(chat._id)}
                 className="cart_remove_btn"

@@ -31,7 +31,7 @@ class UserItem extends Component {
           )}
         </ListItemText>
 
-        {props.email != this.props.user.userData.email ? (
+        {props.email !== this.props.user.userData.email ? (
           <ListItemSecondaryAction>
             <div className="button_wrapp">
               {this.state.open ? (

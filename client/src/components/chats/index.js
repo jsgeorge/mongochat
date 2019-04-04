@@ -4,7 +4,6 @@ import { getCategories } from "../../actions/category_actions";
 import { getChats } from "../../actions/chat_actions";
 import UserBlock from "../utils/user_block";
 import LoadMoreCards from "./load_more_cards";
-import { price } from "../utils/fixed_categories";
 //import MyButton from "../utils/button";
 import CategoriesBlock from "../utils/categories_block";
 
@@ -40,21 +39,6 @@ class Chats extends Component {
       );
     }
   }
-
-  getCategoryId = category => {
-    let categories = this.props.categories.byName;
-    if (categories) {
-      if (categories.length > 0) {
-        categories.map(c => {
-          if ((c.name = category)) return c._id;
-        });
-      } else {
-        return 0;
-      }
-    } else {
-      return -1;
-    }
-  };
 
   handleFilters = (filters, type) => {
     const newFilters = { ...this.state.filters };
