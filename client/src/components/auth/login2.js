@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import FormField from "../utils/form_fields";
 import { validate } from "../utils/misc";
-//import MyButton from "../utils/button";
-
 import { UserLogin } from "../../actions/user_actions";
+
 class Login2 extends Component {
   state = {
     formError: false,
@@ -43,6 +42,23 @@ class Login2 extends Component {
     }
   };
 
+  updateForm(element) {
+    const newFormData = { ...this.state.formdata };
+    const newElement = { ...newFormData[element.id] };
+
+    newElement.value = element.event.target.value;
+
+    let valiData = validate(newElement);
+    newElement.valid = valiData[0];
+    newElement.validationMessage = valiData[1];
+
+    newFormData[element.id] = newElement;
+    this.setState({
+      formError: false,
+      formdata: newFormData,
+      formErrMsg: ""
+    });
+  }
   submitForm(event) {
     event.preventDefault();
     let dataToSubmit = {};
@@ -59,7 +75,7 @@ class Login2 extends Component {
         } else {
           this.setState({
             formError: true,
-            formErrMsg: "error login"
+            formErrMsg: "Invalid username and/or password"
           });
         }
       });
@@ -69,22 +85,6 @@ class Login2 extends Component {
         formErrMsg: "Error. Invalid/Missing Login entries"
       });
     }
-  }
-  updateForm(element) {
-    const newFormData = { ...this.state.formdata };
-    const newElement = { ...newFormData[element.id] };
-    newElement.value = element.event.target.value;
-
-    let valiData = validate(newElement);
-    newElement.valid = valiData[0];
-    newElement.validationMessage = valiData[1];
-
-    newFormData[element.id] = newElement;
-    this.setState({
-      formError: false,
-      formdata: newFormData,
-      formErrMsg: ""
-    });
   }
   render() {
     return (

@@ -248,7 +248,7 @@ class Header extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ margin: "0", padding: "0" }}>
         {this.props.user.userData && this.props.user.userData.isAuth ? (
           <header>
             <AppBar
@@ -284,14 +284,6 @@ class Header extends Component {
                     {this.props.user.userData &&
                     this.props.user.userData.isAuth ? (
                       <span>
-                        {/* {this.cartLink("Cart", 0)}
-                      <Link to={"/user/dashboard"}>{this.mobileUser()}</Link>
-                      <button
-                        className="transp-btn"
-                        onClick={() => this.logoutHandler()}
-                      >
-                        Logout
-                      </button> */}
                         {this.showLinks(this.state.user, false)}
                         {/* <List
                         style={{

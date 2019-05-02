@@ -3,9 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
-
 const app = express();
-
 const mongoose = require("mongoose");
 const async = require("async");
 
