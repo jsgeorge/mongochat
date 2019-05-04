@@ -46,6 +46,13 @@ const Routes = () => {
         <Route path="/user/favorites" exact component={Auth(Cart, true)} />
 
         <Route path="/" exact component={Auth(Home, null)} />
+        <Route
+          render={() => (
+            <div className="pageNotFound">
+              {" "}
+              <h3>404 Page not Found</h3>
+            </div>
+          )}/>
       </Switch>
     </Layout>
   );
