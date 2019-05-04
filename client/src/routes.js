@@ -26,11 +26,11 @@ const Routes = () => {
   return (
     <Layout>
       <Switch>
-        <Route path="/chats" exact component={Auth(Chats, null)} />
+        <Route path="/chats" exact component={Auth(Chats, true)} />
         <Route
           path="/chats/search/:srchStr"
           exact
-          component={Auth(Chat, null)}
+          component={Auth(Chat, true)}
         />
         <Route path="/chat/add" exact component={Auth(AddChat, true)} />
 
@@ -44,7 +44,7 @@ const Routes = () => {
         <Route path="/register" exact component={Auth(Register, false)} />
         <Route path="/user/list" exact component={Auth(UserList, true)} />
         <Route path="/user/favorites" exact component={Auth(Cart, true)} />
-        
+
         <Route path="/" exact component={Auth(Home, null)} />
       </Switch>
     </Layout>
