@@ -10,6 +10,7 @@ import CategoriesBlock from "../utils/categories_block";
 class Chats extends Component {
   ctgryId = ""; //"5c4b41ad2fc464438df10601"
   state = {
+    timer: null,
     grid: "",
     limit: 9,
     skip: 0,
@@ -25,9 +26,8 @@ class Chats extends Component {
   componentDidMount() {
     this.props.dispatch(getCategories());
     if (!this.props.match.params.srchStr) {
-      this.props.dispatch(
-        getChats(this.state.skip, this.state.limit, this.state.filters)
-      );
+      let timer = setInterval(this.loadChats, 1000);
+      this.setState({ timer });
     } else {
       const srchStr = this.props.match.params.srchStr;
       const srchFilter = {
@@ -39,6 +39,16 @@ class Chats extends Component {
       );
     }
   }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
+  loadChats = () => {
+    this.props.dispatch(
+      getChats(this.state.skip, this.state.limit, this.state.filters)
+    );
+  };
 
   handleFilters = (filters, type) => {
     const newFilters = { ...this.state.filters };
