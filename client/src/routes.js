@@ -52,7 +52,8 @@ const Routes = () => {
               {" "}
               <h3>404 Page not Found</h3>
             </div>
-          )}/>
+          )}
+        />
       </Switch>
     </Layout>
   );

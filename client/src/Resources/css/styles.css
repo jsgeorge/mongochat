@@ -380,7 +380,9 @@ header .container .right a {
 }
 header .search_link,
 .account_link,
-.add_link {
+.add_link,
+.home_link,
+.favorites_link {
   display: inline-block;
   position: relative;
   margin: 0;
@@ -420,8 +422,6 @@ header .add_link span {
   background: transparent;
   top: 2px;
   background: transparet;
-  border-radius: 50%;
-  border: 1px solid rgb(25, 123, 189);
   padding: 3px 5px;
 }
 header .log_out_link {

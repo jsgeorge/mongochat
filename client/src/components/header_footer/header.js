@@ -10,7 +10,11 @@ import faShoppingCart from "@fortawesome/fontawesome-free-solid/faShoppingCart";
 import faUser from "@fortawesome/fontawesome-free-solid/faUser";
 import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
 import faPlus from "@fortawesome/fontawesome-free-solid/faPlus";
-
+import faEdit from "@fortawesome/fontawesome-free-solid/faEdit";
+import faHome from "@fortawesome/fontawesome-free-solid/faHome";
+import faStar from "@fortawesome/fontawesome-free-solid/faStar";
+import faSignInAlt from "@fortawesome/fontawesome-free-solid/faSignInAlt";
+import faSignOutAlt from "@fortawesome/fontawesome-free-solid/faSignOutAlt";
 //import Collapse from "@material-ui/core/Collapse";
 //import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -91,10 +95,15 @@ class Header extends Component {
     ) : (
       <FontAwesomeIcon icon={faBars} className="icon" />
     );
+  mobileHome = () => <FontAwesomeIcon icon={faHome} className="icon" />;
+
   mobileCart = () => <FontAwesomeIcon icon={faShoppingCart} className="icon" />;
   mobileUser = () => <FontAwesomeIcon icon={faUser} className="icon" />;
   desktopSearch = () => <FontAwesomeIcon icon={faSearch} className="icon" />;
   desktopAdd = () => <FontAwesomeIcon icon={faPlus} className="icon" />;
+  mobileEdit = () => <FontAwesomeIcon icon={faEdit} className="icon" />;
+  mobileLogin = () => <FontAwesomeIcon icon={faSignInAlt} className="icon" />;
+  mobileLogout = () => <FontAwesomeIcon icon={faSignOutAlt} className="icon" />;
 
   logoutHandler = () => {
     this.props.dispatch(UserLogout()).then(response => {
@@ -121,7 +130,7 @@ class Header extends Component {
         key={i}
         onClick={() => this.logoutHandler()}
       >
-        {item.name}
+        {this.mobileLogout}
       </div>
     ) : (
       <Link to={item.linkTo} key={i}>
@@ -141,6 +150,38 @@ class Header extends Component {
     );
   };
 
+  HomeLink = (item, i) => {
+    const user = this.props.user.userData;
+
+    return (
+      <div className="home_link" key={i}>
+        <Link to={item.linkTo}>
+          {user ? (
+            <span>
+              {" "}
+              <FontAwesomeIcon icon={faHome} />{" "}
+            </span>
+          ) : null}
+        </Link>
+      </div>
+    );
+  };
+  FavoritesLink = (item, i) => {
+    const user = this.props.user.userData;
+
+    return (
+      <div className="favorites_link" key={i}>
+        <Link to={item.linkTo}>
+          {user ? (
+            <span>
+              {" "}
+              <FontAwesomeIcon icon={faStar} />{" "}
+            </span>
+          ) : null}
+        </Link>
+      </div>
+    );
+  };
   accountLink = (item, i) => {
     const user = this.props.user.userData;
 
@@ -167,7 +208,7 @@ class Header extends Component {
             <span>
               {" "}
               <FontAwesomeIcon
-                icon={faPlus}
+                icon={faEdit}
                 style={{ color: "rgb(25, 123, 189)" }}
               />{" "}
             </span>
@@ -233,10 +274,15 @@ class Header extends Component {
       // } else {
       //   return this.cartLink(item, i);
       // }
+      if (item.name === "Chats") {
+        return this.HomeLink(item, i);
+      }
       if (item.name === "Add") {
         return this.addLink(item, i);
       } else if (item.name === "Search") {
         return this.searchLink(item, i);
+      } else if (item.name === "Favorites") {
+        return this.FavoritesLink(item);
       } else if (item.name === "Account") {
         return this.accountLink(item, i);
       } else {
@@ -268,16 +314,16 @@ class Header extends Component {
                       <Link to="/chats">MongoChat</Link>
                     </div>
                   </div>
-                  {/* <div className="srch-form">
-                  <form onSubmit={this.handleDesktopSrch}>
-                    <input
-                      type="text"
-                      ref="desktopSrch"
-                      placeholder="Search products"
-                    />
-                    <button type="submit">{this.desktopSearch()}</button>
-                  </form>
-                </div> */}
+                  <div className="srch-form">
+                    <form onSubmit={this.handleDesktopSrch}>
+                      <input
+                        type="text"
+                        ref="desktopSrch"
+                        placeholder="Search products"
+                      />
+                      <button type="submit">{this.desktopSearch()}</button>
+                    </form>
+                  </div>
                   <div className="mobileNav right mobile">
                     {/* <Link to={"/cart"}>{this.mobileCart()}</Link> */}
 
@@ -312,7 +358,9 @@ class Header extends Component {
                       </List> */}
                       </span>
                     ) : (
-                      <Link to={"/login"}>Login</Link>
+                      <Link to={"/login"}>
+                        <i class="fas fa-sign-in-alt" />
+                      </Link>
                     )
                     /*{" "}
                   <List style={{ padding: "0", width: "100px" }}>
