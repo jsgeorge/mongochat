@@ -3,31 +3,35 @@ import { connect } from "react-redux";
 import { auth } from "../actions/user_actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-export default function(ComposedClass, reload, adminRoute = null) {
+export default function (ComposedClass, reload, adminRoute = null) {
   class AuthenticationCheck extends Component {
     state = {
-      loading: true
+      loading: true,
     };
 
     componentDidMount() {
-      this.props.dispatch(auth()).then(response => {
-        let user = this.props.user.userData;
+      try {
+        this.props.dispatch(auth()).then((response) => {
+          let user = this.props.user.userData;
 
-        if (!user.isAuth) {
-          if (reload) {
-            this.props.history.push("/login");
-          }
-        } else {
-          if (adminRoute && !user.isAdmin) {
-            this.props.history.push("/user/dashboard");
+          if (!user.isAuth) {
+            if (reload) {
+              this.props.history.push("/login");
+            }
           } else {
-            if (reload === false) {
-              this.props.history.push("/chats");
+            if (adminRoute && !user.isAdmin) {
+              this.props.history.push("/user/dashboard");
+            } else {
+              if (reload === false) {
+                this.props.history.push("/chats");
+              }
             }
           }
-        }
-        this.setState({ loading: false });
-      });
+          this.setState({ loading: false });
+        });
+      } catch (err) {
+        this.props.history.push("/login");
+      }
     }
 
     render() {
@@ -44,7 +48,7 @@ export default function(ComposedClass, reload, adminRoute = null) {
 
   function mapStateToProps(state) {
     return {
-      user: state.user
+      user: state.user,
     };
   }
 

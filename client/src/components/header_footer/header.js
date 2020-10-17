@@ -13,6 +13,8 @@ import faPlus from "@fortawesome/fontawesome-free-solid/faPlus";
 import faEdit from "@fortawesome/fontawesome-free-solid/faEdit";
 import faHome from "@fortawesome/fontawesome-free-solid/faHome";
 import faStar from "@fortawesome/fontawesome-free-solid/faStar";
+import faUsers from "@fortawesome/fontawesome-free-solid/faUsers";
+
 import faSignInAlt from "@fortawesome/fontawesome-free-solid/faSignInAlt";
 import faSignOutAlt from "@fortawesome/fontawesome-free-solid/faSignOutAlt";
 //import Collapse from "@material-ui/core/Collapse";
@@ -26,58 +28,58 @@ class Header extends Component {
       {
         name: "Chats",
         linkTo: "/chats",
-        public: true
+        public: true,
       },
       {
         name: "Add",
         linkTo: "/chat/add",
-        public: true
+        public: true,
       },
       {
-        name: "Search",
+        name: "Users",
         linkTo: "/user/list",
-        public: true
+        public: false,
       },
       {
         name: "Favorites",
         linkTo: "/user/favorites",
-        public: false
-      }
+        public: false,
+      },
     ],
     user: [
       {
         name: "Account",
         linkTo: "/user/dashboard",
-        public: false
+        public: false,
       },
       {
         name: "Log in",
         linkTo: "/login",
-        public: true
+        public: true,
       },
       {
         name: "Log out",
         linkTo: "/user/logout",
-        public: false
-      }
+        public: false,
+      },
     ],
     mobile: [
       {
         name: "Home",
         linkTo: "/",
-        public: true
+        public: true,
       },
       {
         name: "Shop",
         linkTo: "/shop/products",
-        public: true
+        public: true,
       },
       {
         name: "Log out",
         linkTo: "/user/logout",
-        public: false
-      }
-    ]
+        public: false,
+      },
+    ],
   };
 
   componentDidMount() {
@@ -106,21 +108,16 @@ class Header extends Component {
   mobileLogout = () => <FontAwesomeIcon icon={faSignOutAlt} className="icon" />;
 
   logoutHandler = () => {
-    this.props.dispatch(UserLogout()).then(response => {
+    this.props.dispatch(UserLogout()).then((response) => {
       if (response.payload.success) {
         this.props.history.push("/");
       }
     });
   };
-  handleDesktopSrch = event => {
+  handleDesktopSrch = (event) => {
     event.preventDefault();
     const srchStr = this.refs.desktopSrch.value;
-    this.props.history.push(`/shop/products/search/${srchStr}`);
-  };
-  handleMobileSrch = event => {
-    event.preventDefault();
-    const srchStr = this.refs.mobileSrch.value;
-    this.props.history.push(`/shop/products/search/${srchStr}`);
+    this.props.history.push(`/chats/search/${srchStr}`);
   };
 
   defaultLink = (item, i) =>
@@ -138,13 +135,25 @@ class Header extends Component {
       </Link>
     );
 
-  searchLink = (item, i) => {
+  // searchLink = (item, i) => {
+  //   //const user = this.props.user.userData;
+
+  //   return (
+  //     <div className="search_link mobile" key={i}>
+  //       <Link to={item.linkTo}>
+  //         <FontAwesomeIcon icon={faSearch} />
+  //       </Link>
+  //     </div>
+  //   );
+  // };
+
+  usersLink = (item, i) => {
     //const user = this.props.user.userData;
 
     return (
-      <div className="search_link" key={i}>
+      <div className="users_link" key={i}>
         <Link to={item.linkTo}>
-          <FontAwesomeIcon icon={faSearch} />
+          <FontAwesomeIcon icon={faUsers} />
         </Link>
       </div>
     );
@@ -191,7 +200,8 @@ class Header extends Component {
           {user ? (
             <span>
               {" "}
-              <FontAwesomeIcon icon={faUser} />{" "}
+              {user.name.substring(0, 1)}
+              {user.lastname.substring(0, 1)}
             </span>
           ) : null}
         </Link>
@@ -224,7 +234,7 @@ class Header extends Component {
           background: "transparent",
           color: "#fff",
           padding: "15px",
-          borderBottom: "1px solid #555"
+          borderBottom: "1px solid #555",
         }}
         key={i}
         className="log_out_link"
@@ -239,7 +249,8 @@ class Header extends Component {
           background: "transparent",
           color: "#fff",
           padding: "15px 0",
-          borderBottom: "1px solid #555"
+
+          borderBottom: "1px solid #555",
         }}
       >
         <Link to={item.linkTo} key={i}>
@@ -251,7 +262,7 @@ class Header extends Component {
     let list = [];
 
     if (this.props.user.userData) {
-      type.forEach(item => {
+      type.forEach((item) => {
         if (!this.props.user.userData.isAuth) {
           if (item.public === true) {
             list.push(item);
@@ -274,15 +285,16 @@ class Header extends Component {
       // } else {
       //   return this.cartLink(item, i);
       // }
+      console.log(i);
       if (item.name === "Chats") {
         return this.HomeLink(item, i);
       }
       if (item.name === "Add") {
         return this.addLink(item, i);
-      } else if (item.name === "Search") {
-        return this.searchLink(item, i);
+      } else if (item.name === "Users") {
+        return this.usersLink(item, i);
       } else if (item.name === "Favorites") {
-        return this.FavoritesLink(item);
+        return this.FavoritesLink(item, i);
       } else if (item.name === "Account") {
         return this.accountLink(item, i);
       } else {
@@ -304,7 +316,7 @@ class Header extends Component {
                 boxShadow: "none",
                 padding: "10px 0px",
                 borderBottom: "1px solid #aaa",
-                color: "#111"
+                color: "#111",
               }}
             >
               <Toolbar>
@@ -316,22 +328,21 @@ class Header extends Component {
                   </div>
                   <div className="srch-form">
                     <form onSubmit={this.handleDesktopSrch}>
-                      <input
-                        type="text"
-                        ref="desktopSrch"
-                        placeholder="Search products"
-                      />
-                      <button type="submit">{this.desktopSearch()}</button>
+                      <input type="text" ref="desktopSrch" />
+                      <button type="submit" className="transp-btn">
+                        {this.desktopSearch()}
+                      </button>
                     </form>
                   </div>
                   <div className="mobileNav right mobile">
                     {/* <Link to={"/cart"}>{this.mobileCart()}</Link> */}
 
-                    {this.props.user.userData &&
-                    this.props.user.userData.isAuth ? (
-                      <span>
-                        {this.showLinks(this.state.user, false)}
-                        {/* <List
+                    {
+                      this.props.user.userData &&
+                      this.props.user.userData.isAuth ? (
+                        <span>
+                          {this.showLinks(this.state.user, false)}
+                          {/* <List
                         style={{
                           padding: "0",
                           width: "100px"
@@ -356,13 +367,13 @@ class Header extends Component {
                           </List>
                         </Collapse>
                       </List> */}
-                      </span>
-                    ) : (
-                      <Link to={"/login"}>
-                        <i class="fas fa-sign-in-alt" />
-                      </Link>
-                    )
-                    /*{" "}
+                        </span>
+                      ) : (
+                        <Link to={"/login"}>
+                          <i class="fas fa-sign-in-alt" />
+                        </Link>
+                      )
+                      /*{" "}
                   <List style={{ padding: "0", width: "100px" }}>
                     <ListItem
                       onClick={this.handleClick}
@@ -391,16 +402,6 @@ class Header extends Component {
                 </div>
               </Toolbar>
 
-              {/* <div className="srch">
-              <form onSubmit={this.handleMobileSrch}>
-                <input
-                  type="text"
-                  ref="mobileSrch"
-                  placeholder="Search products"
-                />
-                <button type="submit">{this.desktopSearch()}</button>
-              </form>
-            </div> */}
               <div className="nav2 mobile">
                 {this.showLinks(this.state.page2, false)}
               </div>
@@ -411,9 +412,9 @@ class Header extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 export default connect(mapStateToProps)(withRouter(Header));

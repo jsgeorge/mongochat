@@ -247,6 +247,9 @@ select {
   font-weight: bold;
   text-align: center;
 }
+.search_link {
+  display: none;
+}
 .card_link,
 .like_link {
   border: none;
@@ -261,6 +264,19 @@ select {
   transition: all 200ms ease-in;
   cursor: pointer;
   margin-left: 5px;
+}
+.account_link {
+  border-radius: 40px;
+  /* background: rgb(51, 245, 12);
+  color: #fff;
+  padding: 0 5px;
+  margin-left: 5px;
+  cursor: pointer;
+  text-align: center;
+  width: 40px; */
+}
+.account_link a {
+  color: #fff;
 }
 .add_favorites {
   color: #ccc;
@@ -381,15 +397,19 @@ header .container .right a {
 header .search_link,
 .account_link,
 .add_link,
+.users_link,
 .home_link,
 .favorites_link {
   display: inline-block;
   position: relative;
   margin: 0;
 }
+.search_link {
+  display: none;
+}
 .transp-btn {
   background: transparent;
-  color: #fff;
+
   border: none;
 }
 .transp-btn-blk {
@@ -408,12 +428,12 @@ header .cart_link span {
   font-size: 12px;
 }
 header .account_link span {
-  background: transparent;
+  background: rgb(87, 179, 221);
   top: 2px;
-  background: gray;
+  color: #fff;
   border-radius: 50%;
-  border: 1px solid gray;
-  padding: 3px 5px;
+
+  padding: 5px;
 }
 header .addLink {
   width: 30px;
@@ -615,7 +635,10 @@ footer .business_nfo .nfo {
   margin: 0;
   border-bottom: 1px solid #ccc;
 }
-
+.card_item_wrapper .username {
+  font-weight: bold;
+  font-size: 12px;
+}
 .card_item_wrapper .image {
   width: 100%;
   height: 300px;
@@ -1240,6 +1263,9 @@ header .desktop {
     width: 100%;
     margin: 30px auto;
   }
+  .search_link {
+    display: none;
+  }
 }
 @media (max-width: 600px) {
   body {
@@ -1294,6 +1320,9 @@ header .desktop {
   header .srch-form {
     display: none;
   }
+  .search_link {
+    display: block;
+  }
   header .container {
     width: 100%;
     padding-top: 0px;
@@ -1321,7 +1350,7 @@ header .desktop {
     padding-bottom: 8px;
   }
   .nav2 a {
-    margin: 0 20px;
+    margin: 0 25px;
     height: 20px;
     font-size: 14px;
   }
@@ -1329,11 +1358,9 @@ header .desktop {
     display: block;
     clear: left;
     width: 100%;
-    margin: 0 auto;
+    margin: 20px auto;
     height: 32px;
-    padding-top: 1px;
-    background: #eee;
-    padding: 5px 15px;
+    padding: 0 15px;
   }
   .srch input {
     margin: 0;
@@ -1582,7 +1609,7 @@ header .desktop {
     width: 100%;
     padding: 0;
     margin: 0;
-    \margin-top: 10px;
+    margin-top: 10px;
     min-width: 0;
     height: 200px;
   }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -12,14 +13,16 @@ class CategoriesBlock extends Component {
   }
   handleClick = () => {};
 
-  handleToggle = value => () => {};
+  handleToggle = (value) => () => {};
 
   renderNavs = () =>
     this.props.list
-      ? this.props.list.map(nav => (
+      ? this.props.list.map((nav) => (
           <div key={nav._id}>
             <ListItem key={nav._id} style={{ padding: "10px 15px" }}>
-              <ListItemText primary={nav.name} />
+              <Link to={`/chats/category/${nav._id}/${nav.name}`}>
+                <ListItemText primary={nav.name} />
+              </Link>
             </ListItem>
           </div>
         ))

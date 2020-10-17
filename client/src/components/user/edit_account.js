@@ -18,14 +18,14 @@ class EditAccount extends Component {
         config: {
           name: "email_input",
           type: "email",
-          placeholder: "Enter email"
+          placeholder: "Enter email",
         },
         validation: {
           required: true,
-          email: true
+          email: true,
         },
         valid: false,
-        validationMessage: ""
+        validationMessage: "",
       },
 
       name: {
@@ -34,13 +34,13 @@ class EditAccount extends Component {
         config: {
           name: "name_input",
           type: "text",
-          placeholder: "Enter name"
+          placeholder: "Enter name",
         },
         validation: {
-          required: true
+          required: true,
         },
         valid: false,
-        validationMessage: ""
+        validationMessage: "",
       },
       lastname: {
         element: "input",
@@ -48,13 +48,13 @@ class EditAccount extends Component {
         config: {
           name: "lastname_input",
           type: "text",
-          placeholder: "Enter lastname"
+          placeholder: "Enter lastname",
         },
         validation: {
-          required: true
+          required: true,
         },
         valid: false,
-        validationMessage: ""
+        validationMessage: "",
       },
       username: {
         element: "input",
@@ -62,15 +62,15 @@ class EditAccount extends Component {
         config: {
           name: "username_input",
           type: "text",
-          placeholder: "Enter username"
+          placeholder: "Enter username",
         },
         validation: {
-          required: false
+          required: false,
         },
         valid: true,
-        validationMessage: ""
-      }
-    }
+        validationMessage: "",
+      },
+    },
   };
   componentDidMount() {
     const newFormData = this.populateFields(
@@ -78,7 +78,7 @@ class EditAccount extends Component {
       this.props.user.userData
     );
     this.setState({
-      formdata: newFormData
+      formdata: newFormData,
     });
   }
   populateFields(formData, fields) {
@@ -103,7 +103,7 @@ class EditAccount extends Component {
     this.setState({
       formError: false,
       formdata: newFormData,
-      formErrMsg: ""
+      formErrMsg: "",
     });
   }
 
@@ -117,33 +117,33 @@ class EditAccount extends Component {
       formIsValid = this.state.formdata[key].valid && formIsValid;
     }
     if (formIsValid) {
-      this.props
-        .dispatch(UserEdit(dataToSubmit))
-        .then(response => {
-          if (response.payload.editSuccess) {
-            this.setState({
-              formError: false,
-              formErrMsg: ""
-            });
-            this.props.history.push("/user/dashboard");
-          } else {
-            this.setState({
-              formError: true,
-              formErrMsg: "error in updating  user"
-            });
-          }
-        })
-        .catch(e => {
-          this.setState({
-            formError: true,
-            formErrMsg: "error in updating user"
-          });
-        });
+      // this.props
+      //   .dispatch(UserEdit(dataToSubmit))
+      //   .then(response => {
+      //     if (response.payload.editSuccess) {
+      //       this.setState({
+      //         formError: false,
+      //         formErrMsg: ""
+      //       });
+      //       this.props.history.push("/user/dashboard");
+      //     } else {
+      //       this.setState({
+      //         formError: true,
+      //         formErrMsg: "error in updating  user"
+      //       });
+      //     }
+      //   })
+      //   .catch(e => {
+      //     this.setState({
+      //       formError: true,
+      //       formErrMsg: "error in updating user"
+      //     });
+      //   });
     } else {
       this.setState({
         formError: true,
         formSuccess: "",
-        formErrMsg: "Error. Invalid/Missing Reg entries"
+        formErrMsg: "Error. Invalid/Missing Reg entries",
       });
     }
   }
@@ -152,38 +152,38 @@ class EditAccount extends Component {
       <LayoutAdmin>
         <div className="user_nfo_panel">
           <h2>Edit Account</h2>
-          <form onSubmit={event => this.submitForm(event)}>
+          <form onSubmit={(event) => this.submitForm(event)}>
             <div className="enroll_title">Email</div>
             <FormField
               id={"email"}
               formdata={this.state.formdata.email}
-              change={element => this.updateForm(element)}
+              change={(element) => this.updateForm(element)}
             />
 
             <div className="enroll_title">First Name</div>
             <FormField
               id={"name"}
               formdata={this.state.formdata.name}
-              change={element => this.updateForm(element)}
+              change={(element) => this.updateForm(element)}
             />
             <div className="enroll_title">Last Name</div>
             <FormField
               id={"lastname"}
               formdata={this.state.formdata.lastname}
-              change={element => this.updateForm(element)}
+              change={(element) => this.updateForm(element)}
             />
             <div className="enroll_title">Username</div>
             <FormField
               id={"username"}
               formdata={this.state.formdata.username}
-              change={element => this.updateForm(element)}
+              change={(element) => this.updateForm(element)}
             />
             {this.state.formError ? (
               <div className="error_label"> {this.state.formErrMsg}</div>
             ) : null}
 
             <button
-              onClick={event => this.submitForm(event)}
+              onClick={(event) => this.submitForm(event)}
               className="button"
             >
               Update
@@ -194,9 +194,9 @@ class EditAccount extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 export default connect(mapStateToProps)(EditAccount);

@@ -2,16 +2,16 @@ const mongoose = require("mongoose");
 const paymentSchema = mongoose.Schema({
   user: {
     type: Array,
-    default: []
+    default: [],
   },
   data: {
     type: Array,
-    default: []
+    default: [],
   },
   product: {
     type: Array,
-    default: []
-  }
+    default: [],
+  },
 });
 
 const Payment = mongoose.model("Payment", paymentSchema);

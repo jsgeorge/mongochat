@@ -6,6 +6,8 @@ import UserBlock from "../utils/user_block";
 import LoadMoreCards from "./load_more_cards";
 //import MyButton from "../utils/button";
 import CategoriesBlock from "../utils/categories_block";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
 
 class Chats extends Component {
   ctgryId = ""; //"5c4b41ad2fc464438df10601"
@@ -19,23 +21,32 @@ class Chats extends Component {
     filters: {
       brand: [],
       category: [],
-      price: []
-    }
+      price: [],
+    },
   };
 
   componentDidMount() {
     this.props.dispatch(getCategories());
-    if (!this.props.match.params.srchStr) {
-      let timer = setInterval(this.loadChats, 1000);
-      this.setState({ timer });
-    } else {
-      const srchStr = this.props.match.params.srchStr;
-      const srchFilter = {
-        name: srchStr
+    const { params } = this.props.match;
+
+    if (params.ctgryId) {
+      const filter = {
+        category: params.ctgryId,
       };
-      this.setState({ srchStr: srchStr });
+      this.setState({ ctgryId: params.ctgryId });
+      this.props.dispatch(getChats(this.state.skip, this.state.limit, filter));
+    } else if (params.srchStr) {
+      const srchStr = params.srchStr;
+      const srchFilter = {
+        text: srchStr,
+      };
+      this.setState({ srch: srchStr });
       this.props.dispatch(
         getChats(this.state.skip, this.state.limit, srchFilter)
+      );
+    } else {
+      this.props.dispatch(
+        getChats(this.state.skip, this.state.limit, this.state.filters)
       );
     }
   }
@@ -57,11 +68,11 @@ class Chats extends Component {
     this.showFilteredResults(newFilters);
 
     this.setState({
-      filters: newFilters
+      filters: newFilters,
     });
   };
 
-  showFilteredResults = filters => {
+  showFilteredResults = (filters) => {
     //console.log(filters);
     this.props.dispatch(getChats(0, this.state.limit, filters)).then(() => {
       this.setState({ skip: 0 });
@@ -80,34 +91,57 @@ class Chats extends Component {
         )
       )
       .then(() => {
-        this.state(skip);
+        this.setState({ skip: skip });
       });
   };
+  handleMobileSrch = (event) => {
+    event.preventDefault();
+    const srchStr = this.refs.mobileSrch.value;
+    const srchFilter = {
+      text: srchStr,
+    };
+    this.setState({ srchStr: srchStr });
+    this.props.dispatch(
+      getChats(this.state.skip, this.state.limit, srchFilter)
+    );
+  };
   render() {
+    const { user, categories, chats } = this.props;
     return (
       <div className="page_wrapper">
         <div className="container">
           <div className="shop_wrapper">
             <div className="left">
-              <UserBlock user={this.props.user.userData} />
+              <UserBlock user={user.userData} />
             </div>
             <div className="right">
+              <div className="srch mobile">
+                <form onSubmit={this.handleMobileSrch}>
+                  <input type="text" ref="mobileSrch" />
+                  <button type="submit" className="transp-btn ">
+                    <FontAwesomeIcon icon={faSearch} className="icon" />
+                  </button>
+                </form>
+              </div>
               <h4>
-                {this.state.srchStr ? (
-                  <span>Search: {this.state.srchStr}</span>
+                {/* {this.props.match.params.srchStr ? (
+                  <span>Search: {this.props.match.params.srchStr}</span>
+                ) : null} */}
+                {this.props.match.params.ctgry ? (
+                  <span>Category: {this.props.match.params.ctgry}</span>
                 ) : null}
               </h4>
 
               <LoadMoreCards
                 grid={this.state.grid}
                 limit={this.state.limit}
-                size={this.props.chats.viewSize}
-                chats={this.props.chats.view}
+                size={chats.viewSize}
+                chats={chats.view}
                 loadMore={() => this.loadMoreCards()}
               />
             </div>
             <div className="sidebar_right">
-              <CategoriesBlock list={this.props.categories.byName} />
+              <CategoriesBlock list={categories.byName} />
             </div>
           </div>
         </div>
@@ -115,11 +149,11 @@ class Chats extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     categories: state.categories,
     chats: state.chats,
-    user: state.user
+    user: state.user,
   };
 };
 export default connect(mapStateToProps)(Chats);

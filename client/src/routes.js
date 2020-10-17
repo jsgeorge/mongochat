@@ -30,7 +30,12 @@ const Routes = () => {
         <Route
           path="/chats/search/:srchStr"
           exact
-          component={Auth(Chat, true)}
+          component={Auth(Chats, true)}
+        />
+        <Route
+          path="/chats/category/:ctgryId/:ctgry"
+          exact
+          component={Auth(Chats, true)}
         />
         <Route path="/chat/add" exact component={Auth(AddChat, true)} />
 

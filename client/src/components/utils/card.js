@@ -12,7 +12,11 @@ import faStar from "@fortawesome/fontawesome-free-solid/faStar";
 
 class Card extends Component {
   state = {
-    open: false
+    open: false,
+  };
+  renderCardImage = (images) => {
+    if (images && images[0].url && images[0].url.length > 0)
+      return images[0].url;
   };
   handleClick = () => {
     this.setState({ open: !this.state.open });
@@ -26,11 +30,7 @@ class Card extends Component {
     ) : (
       <FontAwesomeIcon icon={faStar} style={{ marginLeft: "4px" }} />
     );
-  renderCardImage(images) {
-    if (images.length > 0) {
-      return images[0].url;
-    }
-  }
+
   render() {
     const props = this.props;
     return (
@@ -38,7 +38,8 @@ class Card extends Component {
         <div className="action_container">
           <div className="tags">
             <div className="prod_info">
-              <strong>
+              <span className="username">
+                @
                 {props.author.username ? (
                   <span>{props.author.username}</span>
                 ) : (
@@ -46,28 +47,34 @@ class Card extends Component {
                     {props.author.name} {props.author.lastname}
                   </span>
                 )}
-              </strong>{" "}
+              </span>
+              <br />
               <span className="item-text">{props.text}</span>
             </div>
-            {props.images && props.images.length > 0 ? (
+            {props.images &&
+            props.images.length > 0 &&
+            props.images[0] &&
+            props.images[0].url ? (
               <Link to={`/chats/${props._id}`}>
                 <div
                   className="image"
                   style={{
                     background: `url(${this.renderCardImage(
                       props.images
-                    )}) no-repeat`
+                    )}) no-repeat`,
                   }}
                 />
               </Link>
             ) : null}
             <div className="actions">
               comments {props.comments.length} likes: {props.likes}
-              <div className="button_wrapp">
-                <Link className="card_link" to={`/chat/${props._id}`}>
-                  More
-                </Link>
-              </div>
+              {!this.props.detail && (
+                <div className="button_wrapp">
+                  <Link className="card_link" to={`/chats/${props._id}`}>
+                    More
+                  </Link>
+                </div>
+              )}
               <div className="button_wrapp">
                 <button
                   className="like_link"
@@ -117,9 +124,9 @@ class Card extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 export default connect(mapStateToProps)(withRouter(Card));

@@ -6,31 +6,30 @@ const ChatSchema = mongoose.Schema(
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: true,
     },
     text: {
-      requried: true,
       type: String,
-      maxlength: 500
+      maxlength: 500,
     },
     likes: {
       requried: true,
       type: Number,
-      default: 0
+      default: 0,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true
+      required: true,
     },
     comments: {
       type: Array,
-      default: []
+      default: [],
     },
     images: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
   },
   { timestamps: true }
 );

@@ -7,6 +7,6 @@ const rootReducer = combineReducers({
   user,
   chats,
   categories,
-  users
+  users,
 });
 export default rootReducer;

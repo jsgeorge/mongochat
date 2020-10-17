@@ -23,72 +23,85 @@ class AddChat extends Component {
           name: "chat_input",
           type: "text",
           placeholder: "Enter your chat",
-          rows: 5
+          rows: 5,
         },
         validation: {
-          required: true
+          required: false,
         },
         valid: false,
-        validationMessage: ""
+        validationMessage: "",
       },
+      // category: {
+      //   element: "select",
+      //   value: "",
+      //   config: {
+      //     name: "category_input",
+      //     type: "select",
+      //     options: [],
+      //   },
+      //   validation: {
+      //     required: true,
+      //   },
+      //   valid: false,
+      //   validationMessage: "",
+      // },
       category: {
-        element: "select",
+        element: "input",
         value: "",
         config: {
           name: "category_input",
-          type: "select",
-          options: []
+          type: "text",
+          placeholder: "Enter chat tag",
         },
         validation: {
-          required: true
+          required: false,
         },
         valid: false,
-        validationMessage: ""
+        validationMessage: "",
       },
-
       images: {
         value: [],
         validation: {
-          required: false
+          required: false,
         },
         valid: true,
-        validationMessage: ""
-      }
-    }
+        validationMessage: "",
+      },
+    },
   };
   componentDidMount() {
     const formdata = this.state.formdata;
 
-    this.props.dispatch(getCategories()).then(response => {
-      const newFormData = this.populateOptionFields(
-        formdata,
-        this.props.categories.byName,
-        "category"
-      );
-      this.setState({
-        formdata: newFormData
-      });
-    });
+    // this.props.dispatch(getCategories()).then((response) => {
+    //   const newFormData = this.populateOptionFields(
+    //     formdata,
+    //     this.props.categories.byName,
+    //     "category"
+    //   );
+    //   this.setState({
+    //     formdata: newFormData,
+    //   });
+    // });
   }
 
-  populateOptionFields(formdata, fileRows, type) {
-    const fieldOptions = [];
-    const newFormData = {
-      ...formdata
-    };
-    fileRows.map(item => {
-      fieldOptions.push({
-        key: item._id,
-        value: item.name
-      });
-    });
-    for (let key in newFormData) {
-      if (key === type) {
-        newFormData[key].config.options = fieldOptions;
-      }
-    }
-    return newFormData;
-  }
+  // populateOptionFields(formdata, fileRows, type) {
+  //   const fieldOptions = [];
+  //   const newFormData = {
+  //     ...formdata,
+  //   };
+  //   fileRows.map((item) => {
+  //     fieldOptions.push({
+  //       key: item._id,
+  //       value: item.name,
+  //     });
+  //   });
+  //   for (let key in newFormData) {
+  //     if (key === type) {
+  //       newFormData[key].config.options = fieldOptions;
+  //     }
+  //   }
+  //   return newFormData;
+  // }
 
   updateForm(element) {
     const newFormData = { ...this.state.formdata };
@@ -104,18 +117,18 @@ class AddChat extends Component {
       formError: false,
       formSuccess: false,
       formdata: newFormData,
-      formErrMsg: ""
+      formErrMsg: "",
     });
   }
-  imagesHandler = images => {
+  imagesHandler = (images) => {
     const newFormData = {
-      ...this.state.formdata
+      ...this.state.formdata,
     };
     newFormData["images"].value = images;
     newFormData["images"].valid = true;
 
     this.setState({
-      formdata: newFormData
+      formdata: newFormData,
     });
   };
   submitForm(event) {
@@ -128,20 +141,20 @@ class AddChat extends Component {
       formIsValid = this.state.formdata[key].valid && formIsValid;
     }
     if (formIsValid) {
-      this.props.dispatch(ChatAdd(dataToSubmit)).then(response => {
+      this.props.dispatch(ChatAdd(dataToSubmit)).then((response) => {
         if (response.payload.addSuccess) {
           this.props.history.push("/chats");
         } else {
           this.setState({
             formError: true,
-            formErrMsg: "Error in addig new chat"
+            formErrMsg: "Error in addig new chat",
           });
         }
       });
     } else {
       this.setState({
         formError: true,
-        formErrMsg: "Error. Invalid/Missing Reg entries"
+        formErrMsg: "Error. Invalid/Missing Reg entries",
       });
     }
   }
@@ -149,22 +162,22 @@ class AddChat extends Component {
     return (
       <LayoutAdmin>
         <div>
-          <form onSubmit={event => this.submitForm(event)}>
+          <form onSubmit={(event) => this.submitForm(event)}>
             <FormField
               id={"text"}
               formdata={this.state.formdata.text}
-              change={element => this.updateForm(element)}
+              change={(element) => this.updateForm(element)}
             />
             <div className="form-fields">
               <div className="enroll_title">Category</div>
               <FormField
                 id={"category"}
                 formdata={this.state.formdata.category}
-                change={element => this.updateForm(element)}
+                change={(element) => this.updateForm(element)}
               />
 
               <FileUpload
-                imagesHandler={images => this.imagesHandler(images)}
+                imagesHandler={(images) => this.imagesHandler(images)}
                 reset={this.state.formSuccess}
               />
               {this.state.formSuccess ? (
@@ -179,7 +192,7 @@ class AddChat extends Component {
               ) : null}
 
               <button
-                onClick={event => this.submitForm(event)}
+                onClick={(event) => this.submitForm(event)}
                 className="button"
               >
                 Submit
@@ -191,10 +204,10 @@ class AddChat extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     brands: state.brands,
-    categories: state.categories
+    categories: state.categories,
   };
 };
 export default connect(mapStateToProps)(withRouter(AddChat));

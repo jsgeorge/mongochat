@@ -10,57 +10,57 @@ const userSchema = mongoose.Schema({
     type: String,
     require: true,
     trim: true,
-    unique: 1
+    unique: 1,
   },
   password: {
     type: String,
     require: true,
-    minlength: 5
+    minlength: 5,
   },
   name: {
     type: String,
     require: true,
-    maxlength: 100
+    maxlength: 100,
   },
   lastname: {
     type: String,
     require: true,
-    maxlength: 100
+    maxlength: 100,
   },
   username: {
     type: String,
     require: false,
-    maxlength: 100
+    maxlength: 100,
   },
   favorites: {
     type: Array,
-    default: []
+    default: [],
   },
   following: {
     type: Array,
-    default: []
+    default: [],
   },
   likes: {
     type: Number,
-    require: false
+    require: false,
   },
   role: {
     type: Number,
-    defaut: 0
+    defaut: 0,
   },
   token: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-userSchema.pre("save", function(next) {
+userSchema.pre("save", function (next) {
   var user = this;
 
   if (user.isModified("password")) {
-    bcrypt.genSalt(SALT_I, function(err, salt) {
+    bcrypt.genSalt(SALT_I, function (err, salt) {
       if (err) return next(err);
 
-      bcrypt.hash(user.password, salt, function(err, hash) {
+      bcrypt.hash(user.password, salt, function (err, hash) {
         if (err) return next(err);
         user.password = hash;
         next();
@@ -69,14 +69,15 @@ userSchema.pre("save", function(next) {
   }
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+userSchema.methods.comparePassword = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+    console.log(candidatePassword, this.password);
     if (err) return cb(err);
     cb(null, isMatch);
   });
 };
 
-userSchema.methods.generateToken = function(cb) {
+userSchema.methods.generateToken = function (cb) {
   var user = this;
 
   const expiresIn = 24 * 60 * 60;
@@ -88,7 +89,7 @@ userSchema.methods.generateToken = function(cb) {
   //   if (err) return cb(err);
   //   cb(null, user);
   // });
-  User.update({ _id: user._id }, user, function(
+  User.update({ _id: user._id }, user, function (
     err,
     numberAffected,
     rawResponse
@@ -98,11 +99,11 @@ userSchema.methods.generateToken = function(cb) {
   });
 };
 
-userSchema.statics.findByToken = function(token, cb) {
+userSchema.statics.findByToken = function (token, cb) {
   var user = this;
 
-  jwt.verify(token, SECRET_KEY, function(err, decode) {
-    user.findOne({ _id: decode, token: token }, function(err, user) {
+  jwt.verify(token, SECRET_KEY, function (err, decode) {
+    user.findOne({ _id: decode, token: token }, function (err, user) {
       if (err) return cb(err);
       cb(null, user);
     });
